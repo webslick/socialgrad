@@ -1,0 +1,28 @@
+{
+  "Server": {
+    "dbConfig":  {
+      "development":{
+        "username": "gen_user",
+        "password": "redlinecontrol",
+        "database": "default_db",
+        "host": "5.23.53.62",
+        "port":"3306",
+        "dialect": "mysql",
+        "connectionLimit" : "1000",
+        "connectTimeout"  : "60 * 60 * 1000" 
+      }
+    },
+    "port": 4000,
+    "KEYS": {
+      "JWT_SECRET_KEY_ACCESS": "JWT_SECRET_KEY_ACCESS",
+      "JWT_SECRET_KEY_REFRESH": "JWT_SECRET_KEY_REFRESH"
+    },
+    "URL" : {
+      "API" : "http://localhost:3000",
+      "CLIENT" : "https://vkapi.botinviter.ru",
+      "VK" : "https://vkapi.botinviter.ru/VkApi/",
+      "ACTIVATIOLINK":"http://localhost:4000"
+    }
+  }
+}
+ 

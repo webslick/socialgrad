@@ -1,0 +1,48 @@
+ .radial_component_wrapper {
+  display: flex;
+  width: auto;
+  height: auto;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 20px;
+ }
+
+ .radial_component_item {
+   display: flex;
+   width: 35px;
+   height: 35px;
+   align-items: center;
+   justify-content: center;
+   border: 1px solid gray;
+   border-radius: 50px;
+   cursor: pointer;
+ }
+
+ .radial_check {
+   display: flex;
+   width: 15px;
+   height: 15px;
+   align-items: center;
+   justify-content: center;
+   border: 1px solid gray;
+   background-color: #3399da;
+   border-radius: 50px;
+   cursor: pointer;
+ }
+
+ .check_component_item img {
+  width: 25px;
+  height: 25px;
+ }
+
+ .chek_component_text {
+    margin-left: 20px;
+    font-size: 18px;
+ }
+
+ .radial_text_component {
+   display: flex;
+   width: 90%;
+   height: 100%;
+    white-space: pre-wrap;
+ }

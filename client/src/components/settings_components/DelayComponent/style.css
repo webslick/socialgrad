@@ -1,0 +1,18 @@
+ .delay_wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 20px;
+ }
+
+ .delay_item_wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 20px;
+ }

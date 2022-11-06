@@ -1,0 +1,17 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  /* padding: 120px 50px 10px 120px; */
+  /* background-color: #0098e3; */
+}
+

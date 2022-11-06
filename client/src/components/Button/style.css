@@ -1,0 +1,26 @@
+
+ .btnwrapper {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  background-color: #c8e8f5;
+  align-items: center;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px rgb(10 6 144 / 50%);
+  cursor: pointer;
+  box-sizing: border-box;
+  margin: 0px 8%;
+ }
+
+ .btnwrapper:hover {
+  background-color: #5cd0ff;
+ }
+  
+ .settingBtn{
+  display: flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+ }

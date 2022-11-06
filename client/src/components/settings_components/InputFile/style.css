@@ -1,0 +1,50 @@
+.input__wrapper {
+  width: 250px;
+  height: auto;
+  position: relative;
+  margin: 15px 0;
+  text-align: center;
+}
+ 
+.input__file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+ 
+.input__file-icon-wrapper {
+  height: 60px;
+  width: 60px;
+  margin-right: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-right: 1px solid #fff;
+}
+ 
+.input__file-button-text {
+  line-height: 1;
+  margin-top: 1px;
+}
+ 
+.input__file-button {
+  width: 100%;
+  max-width: 200px;
+  height: 55px;
+  background: #0781d2;
+  color: #f9f9f9;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 7px;
+  cursor: pointer;
+  margin: 0 auto;
+}

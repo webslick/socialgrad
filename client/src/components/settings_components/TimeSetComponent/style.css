@@ -1,0 +1,25 @@
+ .time_set_wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 20px;
+ }
+
+ .time_set_input_wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  flex-direction: row;
+ }
+
+ .time_set_container {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  flex-direction: row;
+ }

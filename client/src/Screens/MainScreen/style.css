@@ -1,0 +1,105 @@
+.main_screen {
+  display: flex;
+  width: 100%;
+  /* height: 100%; */
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.main_wrapper {
+  display: flex;
+  width: 90%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 60px;
+  margin-bottom: 50px;
+  box-shadow: 1px 0px 12px rgb(0 0 0 / 20%);
+  border-radius: 12px;
+}
+
+.map_wrapper {
+  display: flex;
+  width: 90%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 120px;
+  margin-bottom: 50px; 
+} 
+
+.subTitleContainer {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 400px;
+  font-size: 23px;
+  flex-direction: column;
+}
+
+.cardPriceContainer {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.cardsAdvantageContainer {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 60px;
+}
+
+.infoMainContainer {
+  display: flex;
+  width: 100%;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoMainLeftContainer {
+  display: flex;
+  width: 70%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 70px;
+  font-size: 23px;
+}
+
+.infoMainRightContainer {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.strongfont {
+  font-size: 40px;
+  margin-bottom: 40px;
+  font-weight: 800;
+}
+ 
+.compinsation {
+  margin-top: 140px;
+}
+
+.tempContainerRow {
+  display: flex;
+  flex-direction: row;
+}

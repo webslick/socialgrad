@@ -1,0 +1,70 @@
+.main_settings_wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-left: 30px;
+}
+
+.main_settings_name_input_container {
+  display: flex;
+  width: 420px;
+  height: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.main_settings_anticaptcha_input_container {
+  display: flex;
+  width: 420px;
+  height: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.main_settings_anticaptcha_title_container {
+  display: flex;
+  width: 340px;
+  height: auto;
+  flex-direction: row;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.main_settings_proxy_container {
+  display: flex;
+  width: 420px;
+  height: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.main_settings_proxy_title_container {
+  display: flex;
+  width: 460px;
+  height: auto;
+  flex-direction: row;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.main_settings_proxy_name_input_container {
+  display: flex;
+  width: 497px;
+  height: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.shedule_settings_weeks_days {
+  display: flex;
+  width: 497px;
+  height: auto;
+  flex-direction: row;
+}

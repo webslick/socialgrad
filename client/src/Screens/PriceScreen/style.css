@@ -1,0 +1,36 @@
+.price_screen {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.price_wrapper {
+  display: flex;
+  width: 90%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 240px;
+  box-shadow: 1px 0px 12px rgb(0 0 0 / 20%);
+  border-radius: 12px;
+}
+
+.titlePriceContainer {
+  font-size: 40px;
+  font-weight: 600;
+  margin: 50px;
+}
+
+.cardPriceContainer {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}

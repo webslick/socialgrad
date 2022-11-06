@@ -1,0 +1,25 @@
+.chat_screen {
+  display: flex;
+  width: 100%; 
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.chat_wrapper {
+  display: flex;
+  width: 90%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 60px;
+  margin-bottom: 50px;
+  box-shadow: 1px 0px 12px rgb(0 0 0 / 20%);
+  border-radius: 12px;
+}
+
+.chat_compinsation {
+  margin-top: 140px;
+}

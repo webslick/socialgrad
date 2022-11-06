@@ -1,0 +1,27 @@
+ .manual_select_wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 20px;
+ }
+
+ .manual_select_component_task_wrapper { 
+  display: flex;
+  width: 120px;
+  height: 35px;
+  padding-left: 20px;
+ }
+
+ .manual_select_component_task { 
+  display: flex;
+  width: 85%;
+  height: 35px;
+  border-radius: 6px;
+  border: none;
+  padding-left: 8px;
+  color: #4a5aaf;
+  box-shadow: 1px 1px 5px #00000029;
+ }

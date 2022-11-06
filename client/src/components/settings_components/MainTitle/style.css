@@ -1,0 +1,21 @@
+.main_title_component_wrapper {
+  display: flex;
+  width: auto;
+  height: 60px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.main_title_component_text {
+  font-size: 24px;
+  color: #2e5878;
+  font-weight: 600;
+  font-family: sans-serif;
+}
+.main_title_component_text_acc {
+  font-size: 22px;
+  color: #2e5878;
+  margin-left: 30px;
+  font-weight: 600;
+  font-family: sans-serif;
+}

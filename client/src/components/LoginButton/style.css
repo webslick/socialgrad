@@ -1,0 +1,25 @@
+ 
+.buttonLoginContainer { 
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+  text-align: right;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.buttonLogin {
+  border: 1px solid;
+  border-radius: 4px;
+  right: 0;
+  font-size: 14px; 
+  font-weight: 600;
+  color: #2a5d83;
+  text-decoration: none;
+  float: right;
+} 
+ 
+.buttonLogin:before {
+  content: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMTEiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNS41IDEwYTQuNSA0LjUgMCAxMDAtOSA0LjUgNC41IDAgMDAwIDl6IiBzdHJva2U9IiMyOTVDODMiIHN0cm9rZS13aWR0aD0iMS42Ii8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMC45MTcgNS41aDkuMTY2LTkuMTY2eiIgZmlsbD0iIzI5NUM4MyIvPjxwYXRoIGQ9Ik0xMC45MTcgNS41aDkuMTY2IiBzdHJva2U9IiMyOTVDODMiIHN0cm9rZS13aWR0aD0iMS42IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE4IDUuNzV2MS41LTEuNXoiIGZpbGw9IiMyOTVDODMiLz48cGF0aCBkPSJNMTggNS43NXYxLjUiIHN0cm9rZT0iIzI5NUM4MyIgc3Ryb2tlLXdpZHRoPSIxLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==);
+  margin-right: 10px;
+}
