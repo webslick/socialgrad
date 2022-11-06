@@ -7,4 +7,5 @@ export { default as MainScreen } from "./MainScreen";
 // export { default as SettingsScreen } from "./SettingsScreen";
 export { default as ShopScreen } from "./ShopScreen";
 export { default as UKScreen } from "./UKScreen";
+export { default as ShopCategoriesScreen } from "./ShopCategoriesScreen"; 
 // export { default as UserYesScreen } from "./UserYesScreen"; 

@@ -6,7 +6,7 @@ export default function CategoryProducts(props) {
   const { img, title, description, categories } = props; 
  
   return (
-    <Link to={`categories/${categories}`} className="categoryProductWrapper noselect">
+    <Link to={`${categories}`} className="categoryProductWrapper noselect">
       <div className="categoryProductImageContainer">
         <img className="categoryImage" src={img} alt="img" />
       </div>

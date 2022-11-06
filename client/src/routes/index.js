@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'; 
 
-import { MainScreen, UKScreen, ShopScreen } from '../Screens';   
+import { MainScreen, UKScreen, ShopScreen, ShopCategoriesScreen } from '../Screens';   
 import { LocationContextProvider } from './costomNavigation';
 
 const Main = (props) => {
@@ -16,6 +16,7 @@ const Main = (props) => {
           <Route exact path='/myhome/uk' element={<UKScreen scroll={scroll} />}/>
           <Route exact path='/gkh/:item' element={<MainScreen scroll={scroll} />}/>
           <Route exact path='/sales/orderproducts/categories' element={<ShopScreen scroll={scroll} />}/> 
+          <Route exact path='/sales/orderproducts/categories/:item' element={<ShopCategoriesScreen scroll={scroll} />}/> 
           <Route exact path='/sales' element={<MainScreen scroll={scroll} />}/> 
           <Route path='/socprojects/:item' element={<MainScreen scroll={scroll} />}/>
           <Route path='/contacts/:item' element={<MainScreen scroll={scroll} />}/> 
