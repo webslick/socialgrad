@@ -4,7 +4,7 @@
       width: 260px;
       height: 400px;
       box-sizing: border-box;
-      justify-content: space-evenly;
+      justify-content: space-around;
       align-items: center;
       flex-direction: column;
       border-radius: 5px;
@@ -20,6 +20,15 @@
 
     .categoryProductImageContainer {
       display: flex;
+      justify-content: center;
+      align-items: center; 
+      height: 35%;
+      width: 100%; 
+    }
+
+    .categoryProductContainer {
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center; 
       height: 35%;
@@ -43,7 +52,7 @@
     .txtCategoryAbout {
       margin-top: 5px;
       font-weight: 400;
-      height: 100%;
+      height: 80%;
       font-size: 12px;
       overflow: scroll;
       line-height: 1.4;

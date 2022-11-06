@@ -22,8 +22,7 @@ a {
 }
  
 a:-webkit-any-link { 
-  cursor: pointer;
-  text-decoration: underline;
+  cursor: pointer; 
 } 
 
 @media (min-width: 930px) and (max-width: 1199px) {

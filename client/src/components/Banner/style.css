@@ -68,8 +68,7 @@ section {
 }
 
 .linkP {
-  color: #fff;
-  text-decoration: underline;
+  color: #fff; 
   font-size: 20px;
 }
  
@@ -94,7 +93,7 @@ a {
  
 a:-webkit-any-link { 
   cursor: pointer;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
  
 .breadcrumb { 

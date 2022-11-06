@@ -1,24 +1,18 @@
 import React, { useEffect } from 'react';  
-import './style.css';
-import { useDispatch } from 'react-redux'; 
-import { useInvalidUrlAccess, BlockedSlashLinker } from '../../routes/costomNavigation';
-import { useNavigate } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';  
 import { YMaps, Map, Placemark, ZoomControl } from 'react-yandex-maps';
+
 import images from '../../assets/images';
-import Title from '../../components/Title'
-import SubTitle from '../../components/SubTitle'
-import HomeWarning from '../../components/HomeWarning'
-import TableHome from '../../components/TableHome'
-import CardProducts from '../../components/CardProducts'
-import CategoryProducts from '../../components/CategoryProducts'
+import { Title, SubTitle, HomeWarning, TableHome, CardProducts, CategoryProducts } from '../../components'; 
+import './style.css';
 
 
 function MainScreen (props) {
   
   const dispatch = useDispatch();
   const { scroll } = props;
- 
-
+  
   let arrColumn =[
     [{
       title: 'Общая площадь, кв.м',
@@ -64,8 +58,6 @@ function MainScreen (props) {
         <div className='tempContainerRow'>
         <CardProducts img={images.meat} defaultValue={'50 руб. от 1 кг.'} title='Мясо говядина' description="Отличное деревенское мясо привезённое из лучших деревень страны." price={[{ value: 0, label: '350 руб. от 1 кг.',number: 350 },{ value: 1, label: '300 руб. от 10 кг.',number: 300 },{ value: 2, label: '280 руб. от 100 кг.',number: 280 }]} txtbtn="В корзину" />
         <CardProducts img={images.krupy} defaultValue={'50 руб. от 1 кг.'} title='Крупы на развес' description="Первосортные круппы от производителя привезенные из лучших уголков страны" price={[{ value: 0, label: '50 руб. от 1 кг.',number: 50 },{ value: 1, label: '30 руб. от 10 кг.',number: 300 },{ value: 2, label: '25 руб. от 100 кг.',number: 280 }]} txtbtn="В корзину" />
-        <CategoryProducts img={images.meat} defaultValue={'50 руб. от 1 кг.'} title='Свежее мясо' description="Отличное деревенское мясо привезённое из лучших деревень страны." price={[{ value: 0, label: '50 руб. от 1 кг.',number: 50 },{ value: 1, label: '30 руб. от 10 кг.',number: 300 },{ value: 2, label: '25 руб. от 100 кг.',number: 280 }]} txtbtn="В корзину" />
-        <CategoryProducts img={images.krupy} defaultValue={'50 руб. от 1 кг.'} title='Крупы на развес' description="Первосортные круппы от производителя привезенные из лучших уголков страны" price={[{ value: 0, label: '50 руб. от 1 кг.',number: 50 },{ value: 1, label: '30 руб. от 10 кг.',number: 300 },{ value: 2, label: '25 руб. от 100 кг.',number: 280 }]} txtbtn="В корзину" />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon, Button, Modal, Select, Input, Form } from 'antd';
-import { Dialogs } from 'containers';
-
+import { Button, Modal, Select, Input, Form } from 'antd';
+import { Dialogs } from '../';
+import Icon from '@ant-design/icons'; 
 import './Sidebar.scss';
 
 const { Option } = Select;

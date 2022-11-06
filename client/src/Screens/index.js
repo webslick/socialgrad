@@ -1,0 +1,10 @@
+// export { default as ChatScreen } from "./ChatScreen";
+export { default as MainScreen } from "./MainScreen";
+// export { default as OfferScreen } from "./OfferScreen";
+// export { default as PartnersScreen } from "./PartnersScreen";
+// export { default as PoliticsScreen } from "./PoliticsScreen";
+// export { default as PriceScreen } from "./PriceScreen";
+// export { default as SettingsScreen } from "./SettingsScreen";
+export { default as ShopScreen } from "./ShopScreen";
+export { default as UKScreen } from "./UKScreen";
+// export { default as UserYesScreen } from "./UserYesScreen"; 

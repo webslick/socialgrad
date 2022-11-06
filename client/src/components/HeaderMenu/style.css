@@ -62,10 +62,8 @@ a {
   background-color: transparent;
 }
  
-a:-webkit-any-link {
-  /* color: -webkit-link; */
-  cursor: pointer;
-  text-decoration: underline;
+a:-webkit-any-link { 
+  cursor: pointer; 
 }
   
 .navigationWrapper {

@@ -1,7 +1,7 @@
 import React from "react";
-import { Form, Icon, Input } from "antd";
-
-import { validateField } from "utils/helpers";
+import { Form, Input } from "antd";
+import Icon from '@ant-design/icons';
+import { validateField } from "../../utils/helpers";
 
 const FormField = ({
   name,

@@ -4,7 +4,7 @@ import { Button, Input } from "antd";
 import { UploadField } from "@navjobs/upload";
 import { Picker } from "emoji-mart";
 
-import { UploadFiles } from "components";
+import { UploadFiles } from "../";
 
 import "./ChatInput.scss";
 
