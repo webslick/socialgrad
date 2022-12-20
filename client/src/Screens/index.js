@@ -1,4 +1,4 @@
-// export { default as ChatScreen } from "./ChatScreen";
+export { default as ChatScreen } from "./ChatScreen";
 export { default as MainScreen } from "./MainScreen";
 // export { default as OfferScreen } from "./OfferScreen";
 // export { default as PartnersScreen } from "./PartnersScreen";

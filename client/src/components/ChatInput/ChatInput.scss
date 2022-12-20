@@ -1,4 +1,5 @@
 .chat-input {
+  width: 100%;
   margin: 20px;
   position: relative;
 
@@ -6,12 +7,19 @@
     display: flex;
   }
 
-  &__smile-btn {
+  &__smile-btn { 
+    align-self: flex-end;
+    margin-right: 15px;
+  }
+
+  &__record-btn { 
+    align-self: flex-end;
     margin-right: 15px;
   }
 
   .ant-btn-circle {
-    i.anticon {
+    .anticon svg {
+      color: #3d779c;
       cursor: pointer;
       font-size: 20px;
     }
@@ -22,6 +30,7 @@
     bottom: 50px;
     z-index: 1;
   }
+ 
 
   &__record-status {
     display: flex;
@@ -73,7 +82,7 @@
 
   &__actions {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     width: 80px;
     justify-content: space-between;
     margin-left: 15px;

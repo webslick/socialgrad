@@ -139,9 +139,9 @@ class UserService {
     }
   }
 
-  async getUserData(id) {
-    const userData = await DB.searchInTables('vk',{ user_id: id });
-    return userData;
+  async getProducts(categories) {
+    const productData = await DB.searchInTables('categories',{ categories: categories });
+    return productData;
   }
 
   async upload (body, res, next) {

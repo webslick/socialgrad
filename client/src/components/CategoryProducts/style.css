@@ -2,8 +2,7 @@
     .categoryProductWrapper { 
       display: flex;
       width: 260px;
-      height: 400px;
-      box-sizing: border-box;
+      height: 400px; 
       justify-content: space-around;
       align-items: center;
       flex-direction: column;
@@ -46,7 +45,7 @@
       color: #121111;
       line-height: 1.2;
       text-transform: uppercase;
-      text-align: center;
+      text-align: center; 
     }  
 
     .txtCategoryAbout {

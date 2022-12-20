@@ -8,6 +8,16 @@ const axios = require('axios');
 
 class UserController  {
   
+  async getCategoriesProducts(req,res,next) {
+    try {
+      const { categories } = req.body
+      const productsData = await userService.getProducts(categories,res); 
+      return res.json(productsData);
+    } catch (e) {
+      next(e)
+    }
+  }
+  
   async registration(req,res,next) {
     try {
       const { email ,password } = req.body

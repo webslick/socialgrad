@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Icon from '@ant-design/icons';
 import { Popover, Button } from 'antd';
@@ -98,6 +98,8 @@ const Message = ({
   onRemoveMessage,
   setPreviewImage,
 }) => {
+   
+
   const renderAttachment = item => {
     if (item.ext !== 'webm') {
       return (
@@ -126,8 +128,8 @@ const Message = ({
         'message--image': !isAudio(attachments) && attachments && attachments.length === 1 && !text,
       })}>
       <div className="message__content">
-        <IconReaded isMe={isMe} isReaded={readed} />
-        <Popover
+    
+        {/* <Popover
           content={
             <div>
               <Button onClick={onRemoveMessage}>Удалить сообщение</Button>
@@ -137,13 +139,16 @@ const Message = ({
           <div className="message__icon-actions">
             <Button type="link" shape="circle" icon="ellipsis" />
           </div>
-        </Popover>
+        </Popover> */}
+
         <div className="message__avatar">
           <Avatar user={user} />
         </div>
         <div className="message__info">
           {(text || isTyping) && (
             <div className="message__bubble">
+              {!isTyping && ( <IconReaded isMe={isMe} isReaded={readed} /> )}
+              
               {text && (
                 <p className="message__text">
                   {reactStringReplace(text, /:(.+?):/g, (match, i) => (
@@ -179,20 +184,20 @@ const Message = ({
   );
 };
 
-Message.defaultProps = {
-  user: {},
-};
+// Message.defaultProps = {
+//   user: {},
+// };
 
-Message.propTypes = {
-  avatar: PropTypes.string,
-  text: PropTypes.string,
-  date: PropTypes.string,
-  user: PropTypes.object,
-  attachments: PropTypes.array,
-  isMe: PropTypes.bool,
-  isReaded: PropTypes.bool,
-  isTyping: PropTypes.bool,
-  audio: PropTypes.string,
-};
+// Message.propTypes = {
+//   avatar: PropTypes.string,
+//   text: PropTypes.string,
+//   date: PropTypes.string,
+//   user: PropTypes.object,
+//   attachments: PropTypes.array,
+//   isMe: PropTypes.bool,
+//   isReaded: PropTypes.bool,
+//   isTyping: PropTypes.bool,
+//   audio: PropTypes.string,
+// };
 
 export default Message;

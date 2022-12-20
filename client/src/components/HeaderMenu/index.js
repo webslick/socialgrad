@@ -4,11 +4,13 @@ import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { pages, users } from '../../redux/selectors';
 import { change_page } from '../../redux/actions/app';
 import LoginButton from '../LoginButton'; 
+import images from '../../assets/images'; 
 import './style.css';
 
 function HeaderMenu(props) {  
  
   const { onClick, userName, page, mobile, isAuth, scroll} = props; 
+  const { logo } = images; 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,11 +70,15 @@ function HeaderMenu(props) {
       <header className={`headerWrapper ${scroll < 658 ? '' : 'nobord'}`}>
         <div className="container">
           <div className={`header ${scroll > 100 ? 'top' : ''}`}>
-            <div className="topItemsMenu">
+            <div className="topItemsMenu"> 
+              <div className='colrowcontainer'>
                 <Link to="/" className="logoContainer">
+                  <img className={`${scroll > 100 ? 'litleImg' : 'logoImg'}`} src={logo} alt="logo" />
                   <span className="logo" >Первая Федеральная Домовая Служба</span>
                 </Link>
-                <span className="subTextMenu" >Территория твоего проживания</span>
+                <span className={`${scroll > 100 ? 'litleSubTextMenu' : 'subTextMenu'}`}>Территория твоего проживания</span>
+              </div>
+              <div className='colrowcontainer'>
                 <Link to="tel:8 800 200 06 00" className="phoneMenu">8 800 2000 600</Link> 
                 {
                   !userIsAuth ? <LoginButton text="Личный кабинет" /> :
@@ -92,6 +98,7 @@ function HeaderMenu(props) {
                       </div>
                     </div>
                 }
+              </div> 
                 {/* <RegistrationButton text="Регистрация" margin={40} color="#1d81d0" /> */}
             </div>
           </div>

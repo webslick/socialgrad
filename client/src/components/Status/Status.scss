@@ -1,6 +1,12 @@
+
+.chat__dialog-header-username {
+
+}
+
+ 
 .status {
-  display: inline-block;
-  color: #bfbfbf;
+  display: inline-block;  
+  color: #A0AEBF;   
   position: relative;
 
   &::before {
@@ -14,10 +20,10 @@
     border-radius: 30px;
     background-color: #d3d3d3;
   }
-
+ 
   &--online {
-    &::before {
-      background-color: #00c980;
+    &::before { 
+      background-color: #3FA589; 
     }
   }
 }

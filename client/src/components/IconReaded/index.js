@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import images from "../../assets/images"; 
 
-const { readedSvg, noReadedSvg } = images;
+const { read, noread } = images; 
+
 const IconReaded = ({ isMe, isReaded }) =>
   (isMe &&
     (isReaded ? (
-      <img className="message__icon-readed" src={readedSvg} alt="Readed icon" />
+      <img className="message__icon-readed" src={read} alt="Readed icon" />
     ) : (
       <img
         className="message__icon-readed message__icon-readed--no"
-        src={noReadedSvg}
+        src={noread}
         alt="No readed icon"
       />
     ))) ||

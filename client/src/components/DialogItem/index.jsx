@@ -4,7 +4,8 @@ import format from 'date-fns/format';
 import isToday from 'date-fns/isToday';
 import { Link } from 'react-router-dom';
 
-import { IconReaded, Avatar } from '../';
+import IconReaded from '../IconReaded';
+import Avatar from '../Avatar';
 
 const getMessageTime = createdAt => {
   if (isToday(createdAt)) {

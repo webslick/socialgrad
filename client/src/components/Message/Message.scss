@@ -36,6 +36,7 @@ $message-typing-circle: #a6bdf0;
   }
 
   &__bubble {
+    position: relative;
     background: $blue;
     box-shadow: 0px 5px 5px rgba(54, 116, 255, 0.196733);
     border-radius: 12px 12px 12px 0px;
@@ -100,11 +101,14 @@ $message-typing-circle: #a6bdf0;
   &__icon {
     &-readed {
       position: absolute;
-      bottom: 22px;
-      left: -25px;
+      bottom: 6px;
+      right: 6px;
+      width: 18px;
+      height: 18px;
 
       &--no {
-        left: -20px;
+        bottom: 6px;
+        right: 6px;
       }
     }
     &-actions {
@@ -194,11 +198,12 @@ $message-typing-circle: #a6bdf0;
 
     #{$self}__info {
       display: flex;
-      align-items: center;
-      text-align: right;
+      align-items: flex-end;
+      text-align: start;
+      flex-direction: column-reverse;
     }
 
-    #{$self}__bubble {
+    #{$self}__bubble { 
       background: #ffffff;
       border: 1px solid #ececec;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.0220444);

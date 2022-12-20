@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Empty, Spin } from 'antd';
 import classNames from 'classnames';
 
@@ -51,8 +51,8 @@ const Messages = ({
   );
 };
 
-Messages.propTypes = {
-  items: PropTypes.array,
-};
+// Messages.propTypes = {
+//   items: PropTypes.array,
+// };
 
 export default Messages;

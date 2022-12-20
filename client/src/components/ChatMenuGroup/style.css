@@ -1,0 +1,32 @@
+.chatMenuGroupContainer {
+  display: flex;
+  width: 100%;
+  height: 40px; 
+  align-items: center;
+  justify-content: center; 
+  flex-direction: row; 
+}
+
+.itemMenu {
+  display: flex;
+  flex-direction: column; 
+  cursor: pointer; 
+}
+
+.textItem {
+  color: #676767; 
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0px 6px;
+}
+
+.textItem:hover {
+  color: #3c3b3b;   
+}
+
+.activeItem {
+  display: flex;
+  width: 100%;
+  height: 1px;
+  background-color: #74a1ca; 
+}

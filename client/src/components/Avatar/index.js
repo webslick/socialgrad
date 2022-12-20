@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"; 
 
 import { generateAvatarFromHash } from "../../utils/helpers";
 
@@ -29,9 +28,5 @@ const Avatar = ({ user }) => {
     );
   }
 };
-
-Avatar.propTypes = {
-  className: PropTypes.string
-};
-
+ 
 export default Avatar;

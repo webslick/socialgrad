@@ -1,0 +1,26 @@
+.headerChatPanelContainer {
+  display: flex;
+  width: 100%;
+  height: 62px; 
+  align-items: center;
+  justify-content: center; 
+  flex-direction: row;  
+  /* background-color: #c8e1fe;
+  background-color: #A0AEBF;
+  background-color: #D6E8FF; */
+  background-color: #E1EEFF; 
+  border:1px solid#d9d9d9; 
+}
+ 
+.textName {
+  color: #115d87; 
+  /* color: #416FA5; 
+  color: #115d87; 
+  color: #115d87; 
+  color: #115d87; 
+  color: #115d87; 
+  color: #115d87;  */
+  font-size: 15px;
+  font-weight: 600; 
+}
+ 

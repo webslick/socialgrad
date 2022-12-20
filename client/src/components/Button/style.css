@@ -8,8 +8,7 @@
   align-items: center;
   border-radius: 3px;
   box-shadow: 1px 1px 5px rgb(10 6 144 / 50%);
-  cursor: pointer;
-  box-sizing: border-box;
+  cursor: pointer; 
   margin: 0px 8%;
  }
 

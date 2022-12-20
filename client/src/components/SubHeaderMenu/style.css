@@ -8,13 +8,6 @@ header.nobord {
   width: 100%;
 }
  
-.container {
-  width: 80%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin: 0 auto;
-}
- 
 a {
   color: #007bff;
   text-decoration: none;
@@ -24,31 +17,7 @@ a {
 a:-webkit-any-link { 
   cursor: pointer; 
 } 
-
-@media (min-width: 930px) and (max-width: 1199px) {
-  .container {
-    width: 95%; 
-  }
-}
-
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .container {
-    width: 90%; 
-  }
-}
-
-@media (min-width: 1400px) and (max-width: 1599px) {
-  .container {
-    width: 80%; 
-  }
-}
-
-@media (min-width: 1600px) and (max-width: 1999px) {
-  .container {
-    width: 65%; 
-  }
-} 
-
+ 
 .test>li>a:hover {
   color: #d7e0ea;
 }

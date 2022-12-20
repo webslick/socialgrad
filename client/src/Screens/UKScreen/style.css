@@ -1,12 +1,4 @@
-.main_screen {
-  display: flex;
-  width: 100%;
-  /* height: 100%; */
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  box-sizing: border-box;
-}
+ 
 
 .main_wrapper {
   display: flex;

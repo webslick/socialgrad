@@ -2,8 +2,7 @@
 
 .App {
   height: 100%;
-  width: 100%;
-  box-sizing: border-box;
+  width: 100%; 
   overflow: scroll;
 }
 
@@ -19,9 +18,51 @@
 
 main {
   height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  /* padding: 120px 50px 10px 120px; */
-  /* background-color: #0098e3; */
+  width: 100%; 
 }
+
+
+.container {
+  width: 80%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) and (max-width: 859px) { 
+  .container {
+    width: 93%; 
+  } 
+}
+
+@media (min-width: 799px) and (max-width: 1174px) {
+  .container {
+    width: 90%; 
+  } 
+}
+
+@media (min-width: 1175px) and (max-width: 1320px) {
+  .container {
+    width: 96%; 
+  }
+}
+
+@media (min-width: 1321px) and (max-width: 1520px) {
+  .container {
+    width: 85%; 
+  }
+}
+
+@media (min-width: 1521px) and (max-width: 1750px) {
+  .container {
+    width: 75%; 
+  }
+}
+
+@media (min-width: 1751px) and (max-width: 1999px) {
+  .container {
+    width: 85%; 
+  }
+}
+ 
 

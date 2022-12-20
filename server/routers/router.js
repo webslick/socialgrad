@@ -1,6 +1,5 @@
 const { Router } = require('express');
-const userController = require('../controllers/user_controller');
-const VKServicesController = require('../controllers/vk_services_controller');
+const userController = require('../controllers/user_controller'); 
 const router = Router()
 const { body } = require ('express-validator');
 
@@ -17,7 +16,7 @@ router.post('/logout',userController.logout);
 
 // router.get('/refresh',userController.refresh);
 
-// router.post('/userAccountsvk',userController.getUserData);
+router.post('/categories',userController.getCategoriesProducts);
 
  
 module.exports = router;

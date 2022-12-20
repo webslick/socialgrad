@@ -17,13 +17,13 @@ export default function InputCardProducts(props) {
   return (
     <div className="inputCardProductWrapper">
       <div className='currentButtonAddContainer'>
-        <Button className='colorLightGreen' type="primary" icon={<PlusOutlined />} size={'small'} />
+        <Button className='colorLightGreen' type="primary" icon={<PlusOutlined />} />
       </div>
       <div className='inputNumberContainer'>
         <InputNumber controls={false} style={{ width: '50px' }} min={number} max={1000} value={value} onChange={setValue} />
       </div>
       <div className='currentButtonRemoveContainer'>
-        <Button className='colorLightGreen' type="primary" icon={<MinusOutlined />} size={'small'} />
+        <Button className='colorLightGreen' type="primary" icon={<MinusOutlined />} />
       </div> 
     </div>
   ); 

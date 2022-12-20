@@ -1,23 +1,15 @@
  .dialogs {
-  &__search {
-    padding: 2px 20px 20px 20px;
-
-    .ant-input {
-      background-color: #f7f8f9;
-      border: 0;
-      height: 38px;
-      padding: 4px 11px 6px;
-    }
-  }
-
+ 
   &__item {
     $item: &;
     display: flex;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     color: #000;
-
+    padding: 20px;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
     &:hover {
-      background-color: #f3f7ff;
+      background-color: #e0eeff;
     }
 
     &--selected,
@@ -97,8 +89,7 @@
           border-radius: 30px;
           font-size: 11px;
           text-align: center;
-          line-height: 17px;
-          box-shadow: 0 0 0px 3px #fff;
+          line-height: 17px; 
         }
         .message__icon-readed {
           bottom: 0;
