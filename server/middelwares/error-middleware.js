@@ -1,6 +1,7 @@
 const ApiErr = require('../exeptions/api-error');
 
 module.exports = function (err,req,res,next) {
+  console.log(err); 
   if (err instanceof ApiErr) {
     if(err.message.length < 5) {
       err.message = 'Возникла ошибка:'

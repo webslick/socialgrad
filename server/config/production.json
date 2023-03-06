@@ -17,10 +17,8 @@
       "JWT_SECRET_KEY_REFRESH": "JWT_SECRET_KEY_REFRESH"
     },
     "URL" : {
-      "API" : "https://botinviter.ru",
-      "CLIENT" : "https://botinviter.ru",
-      "VK" : "https://vkapi.botinviter.ru/VkApi/",
-      "ACTIVATIOLINK":"https://botinviter.ru"
+      "API" : "https://socialgrad.ru", 
+      "CLIENT" : "https://socialgrad.ru" 
     }
   }
 }

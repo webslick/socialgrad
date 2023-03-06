@@ -1,11 +1,11 @@
 const axios = require('axios');
 const config = require('config');
 
-const url_api_vk = config.get('Server.URL.VK');
+const url_api = config.get('Server.URL.API');
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: url_api_vk
+  baseURL: url_api
 });
 
 $api.interceptors.request.use((config) => {

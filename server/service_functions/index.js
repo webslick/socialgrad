@@ -67,9 +67,7 @@ function searchInPosts (words,content) {
     return false;
   }
 }
-
-
-
+ 
 module.exports = {
   getTime,
   searchInPosts,

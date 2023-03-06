@@ -1,78 +1,110 @@
-const { validationResult } = require ('express-validator');
-const userService = require('../services/users-service');
-const VKService = require('../services/vk-servise');
-const config = require('config');
-const url_client = config.get('Server.URL.CLIENT');
-const  ApiErr = require('../exeptions/api-error');
-const axios = require('axios');
+const userService = require('../services/users-service'); 
+// const config = require('config');
+// const url_client = config.get('Server.URL.CLIENT'); 
+ 
+module.exports = class UserController  { 
+  io; 
 
-class UserController  {
-  
-  async getCategoriesProducts(req,res,next) {
-    try {
-      const { categories } = req.body
-      const productsData = await userService.getProducts(categories,res); 
-      return res.json(productsData);
+  constructor(io) { 
+    this.io = io; 
+  }
+ 
+  async list(req,res,next) {  
+    const { userId } = req.params;
+    try { 
+     const post = await userService.list({  
+      userId
+     }); 
+    return res.json(post);
+  } catch (e) {
+    next(e);
+  }
+    // try { 
+    //   const users = await userService.list(); 
+    //  return res.json(users);
+    // } catch (e) {
+    //   next(e);
+    // }
+  }
+ 
+  async getById(req,res,next) {
+    try { 
+      const { id } = req.params;
+      console.log()
+      const users = await userService.getById(id); 
+     return res.json(users);
     } catch (e) {
-      next(e)
+      next(e);
+    }
+  }
+
+  async add(req,res,next) {
+    try { 
+      const { 
+        password,
+        login,
+        name,
+        lastname,
+        gender,
+        birthdate,
+        telephone,
+        email,
+        confirmed,
+        avatar,
+        confirm_hash,
+        last_seen,
+        dialog_id,
+        collaborator,
+        creator,
+        lastMessage,
+        role_name 
+       } = req.body; 
+ 
+      const users = await userService.add({  
+        password,
+        login,
+        name,
+        lastname,
+        gender,
+        birthdate,
+        telephone,
+        email,
+        confirmed,
+        avatar,
+        confirm_hash,
+        last_seen,
+        dialog_id,
+        collaborator,
+        creator,
+        lastMessage,
+        role_name
+       }); 
+      return res.json(users);
+    } catch (e) {
+      next(e);
     }
   }
   
-  async registration(req,res,next) {
-    try {
-      const { email ,password } = req.body
-      const userData = await userService.registration(email, password,res);
-      res.cookie('refreshToken',userData.refreshToken,{maxAge:30*24*60*60*1000,httpOnly: true})
-      return res.json(userData);
+  async update(req,res,next) {
+    try {  
+      const { id } = req.params;  
+      const { password } = req.query;  
+      const users = await userService.update(id,{ password }); 
+     return res.json(users);
     } catch (e) {
-      next(e)
+      next(e);
     }
   }
  
-  async login(req,res,next) {
-    try {
-      const { email ,password } = req.body; 
-      const userData = await userService.login(email, password,res);
-      console.log(userData,'userData')
-      // res.cookie('refreshToken',userData.refreshToken,{maxAge:30*24*60*60*1000,httpOnly: true})
-      return res.json(userData);
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  async activate(req,res,next) {
-    try {
-      const activationLink = req.params.link;
-      await userService.activate(activationLink);
-      return res.redirect(url_client)
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  async refresh(req,res,next) {
-    try {
-      const { refreshToken } = req.cookies;
-      const userData = await userService.refresh(refreshToken);
-      res.cookie('refreshToken',userData.refreshToken,{ maxAge:30*24*60*60*1000, httpOnly: true })
-      return res.json(userData);
+  async delete(req,res,next) {
+    try { 
+      const { id } = req.params;   
+      console.log(id)
+      const users = await userService.delete(id); 
+     return res.json(users);
     } catch (e) {
       next(e);
     }
   }
  
-  
-  async logout(req,res,next) {
-    try {
-      const { refreshToken } = req.cookies;
-      const token = await userService.logout(refreshToken);
-      res.clearCookie('refreshToken');
-     return res.json(token);
-    } catch (e) {
-      next(e);
-    }
-  }
-}
-
-module.exports = new UserController();
+} 
