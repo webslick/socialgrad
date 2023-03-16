@@ -3,7 +3,7 @@ const DB = require('../db/index');
 const UserDto = require('../dtos/user-dto');
 const ProfileDto = require('../dtos/profile-dto');
 const ApiErr = require('../exeptions/api-error');
- 
+const serviceFunction = require('../service_functions/index')
 class UserService {
   
   // update(req, res) {
@@ -67,7 +67,7 @@ class UserService {
         }
       }
     } catch(e) {
-      throw ApiErr.BadRequest(e.message)
+       throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
     }
 
   }
@@ -84,33 +84,17 @@ class UserService {
         }
       }
     } catch(e) {
-      throw ApiErr.BadRequest(e.message)
+       throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
     }
 
   }
   
   async add({   
-    user_id,
-    fio,
-    birthdate,
-    gender,
-    email,
-    confirmed,
-    avatar,
-    confirm_hash,
-    last_seen 
+    role_name
   }) {
     try {
       const profileAdd = await DB.addInTables('profile', { 
-        user_id,
-        fio,
-        birthdate,
-        gender,
-        email,
-        confirmed,
-        avatar,
-        confirm_hash,
-        last_seen
+        role_name
        });  
       if(!profileAdd) {
         throw ApiErr.BadRequest(`Профиль не создан: `);
@@ -120,7 +104,7 @@ class UserService {
         }
       }
     } catch(e) {
-      throw ApiErr.BadRequest(e.message)
+       throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
     }
 
   }
@@ -141,7 +125,7 @@ class UserService {
         // } 
       }  
     } catch(e) {
-      throw ApiErr.BadRequest(e.message)
+       throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
     }
 
   }
@@ -162,7 +146,7 @@ class UserService {
         } 
       }  
     } catch(e) {
-      throw ApiErr.BadRequest(e.message)
+       throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
     }  
   }
   

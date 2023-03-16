@@ -2,19 +2,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 export const NowBDformat = moment(moment().add(7, 'hours').format("YYYY-MM-DD HH:mm"))
-
-export const getRndInteger = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
-
-export const generationTempArr = (toggle,temp_min,temp_max) => {
-  let arr = [];
-  for(let i=0 ;i < 6; i++) {
-    arr.push(toggle ? getRndInteger(temp_min,temp_max) : getRndInteger(60,75))
-  }
-  return arr
-}
-
+ 
 export const convertSeconds = (time) => {
   const milliseconds = time%1000;
   const seconds     = parseInt(time=time/1000)%60;

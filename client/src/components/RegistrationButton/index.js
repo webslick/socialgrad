@@ -2,13 +2,14 @@ import React from 'react';
 import './style.css';
 
 function RegistrationButton(props) {
-    const { text, width, height, color, onClick, margin} = props;
+    const { text, width, height, color, onClick, margin, marginb} = props;
     return (
       <div 
         style={{ 
           width: width === undefined ? '180px': width,
           height: height === undefined ? '35px' : height,
           marginLeft: margin === undefined ? '0px' : margin,
+          marginBottom: marginb === undefined ? '0px' : margin,
           backgroundColor: color 
         }} 
 

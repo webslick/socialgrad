@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const SERVER = config.get('Server');
 const PORT = SERVER.port || 4000;
  
+
 const errorMiddleware = require('./middelwares/error-middleware');
 const updateLastSeen = require('./middelwares/update-lastseen-middleware');
 
@@ -19,15 +20,22 @@ const createRoutes = require('./routers/router');
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
-  // credentials: true,
+  credentials: true,
   //  origin: 'https://botinviter.ru',
   origin: 'http://localhost:3000',
-  // origin: 'http://192.168.0.90',
-  // methods: "GET, POST, PATCH, DELETE, OPTIONS",
-} 
+  methods: "GET, POST, PATCH, DELETE, OPTIONS",
+},
+{
+  headers: {
+    'access-control-allow-credentials': true,
+    'access-control-allow-headers': "Origin, X-Requested-With, Content-Type, Accept",
+    'access-control-allow-methods': "GET, POST, PATCH, DELETE, OPTIONS",
+    'access-control-allow-origin': '*'
+  }
+}
 )); 
- 
 const io = createSocket(http)
 
 // app.use(checkAuth);

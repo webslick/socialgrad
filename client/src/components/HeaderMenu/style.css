@@ -211,6 +211,10 @@ a:-webkit-any-link {
   justify-content: flex-end;
 }
 
+.wrapperDropdown:hover .dropdown-menu {
+  display: flex;  
+}
+
 .dropdown {
   display: flex;
   position: relative;
@@ -224,14 +228,37 @@ a:-webkit-any-link {
   align-items: center; 
   justify-content: space-between;
   width: 120px;
+  cursor: pointer;
 }
+
+ 
 
 .username {
   font-size: 14px;
 }
 
-.dropdown-menu{
-   display: none;
+.dropdown-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 60px;
+  right: 0px;
+  width: 150px;
+  border-radius: 10px;
+  height: 30px;
+  background-color: #bad8f3;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.dropdown-menu:hover {
+  display: flex; 
+}
+
+.dropdown-item:hover .dropdown-menu{
+  display: flex; 
 }
 
 .colrowcontainer {

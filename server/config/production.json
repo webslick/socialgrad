@@ -18,6 +18,7 @@
     },
     "URL" : {
       "API" : "https://socialgrad.ru", 
+      "ACTIVATIOLINK":"https://socialgrad.ru",
       "CLIENT" : "https://socialgrad.ru" 
     }
   }

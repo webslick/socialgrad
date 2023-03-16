@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import HeaderChatPanel from '../HeaderChatPanel'
-import Avatar from '../Avatar' 
-import Button from '../Button_' 
+import { useSpeechRecognition } from 'react-speech-kit';
 import MessageTextArea from '../MessageTextArea'
 import ChatInput from '../ChatInput' 
-import { CommentOutlined } from '@ant-design/icons'; 
 
+ 
 import './style.css'; 
 
 export default function ChatMonitorPanel(props) { 
-
-
+ 
   const messages = [{ 
     user: {_id: '5721', fullname:'user' },
     text: 'Привет!', 
@@ -54,7 +52,7 @@ export default function ChatMonitorPanel(props) {
     setPreviewImage: ()=>{},
     audio:'url' 
   }, { 
-    user: {_id: '1721', fullname:'user' },
+    user: {_id: '1745а21', fullname:'user' },
     text: 'Да конечно, проверяй! А я напишу тебе сообщение с одной буквой тогда))) ', 
     date: new Date(),
     avatar:'url',
@@ -66,8 +64,8 @@ export default function ChatMonitorPanel(props) {
     setPreviewImage: ()=>{},
     audio:'url' 
   }, {  
-    user: {_id: '1721', fullname:'user' },
-    text: 'Ок', 
+    user: {_id: '172сц1', fullname:'user' },
+    text: 'Ок :grinning:', 
     date: new Date(),
     avatar:'url',
     isMe: true,
@@ -78,7 +76,7 @@ export default function ChatMonitorPanel(props) {
     setPreviewImage: ()=>{},
     audio:'url' 
   }, {  
-    user: {_id: '1721', fullname:'user' },
+    user: {_id: '17м33321', fullname:'user' },
     text: '!', 
     date: new Date(),
     avatar:'url',
@@ -90,7 +88,7 @@ export default function ChatMonitorPanel(props) {
     setPreviewImage: ()=>{},
     audio:'url' 
   }, {  
-    user: {_id: '1721', fullname:'user' },
+    user: {_id: '17йв21', fullname:'user' },
     text: '!', 
     date: new Date(),
     avatar:'url',
@@ -102,7 +100,7 @@ export default function ChatMonitorPanel(props) {
     setPreviewImage: ()=>{},
     audio:'url' 
   }, { 
-    user: {_id: '1721', fullname:'user' },
+    user: {_id: '17v52421', fullname:'user' },
     text: '', 
     date: new Date(),
     avatar:'url',
@@ -119,7 +117,14 @@ export default function ChatMonitorPanel(props) {
   const [emojiPickerVisible, toogleEmojiPickerVisible] = useState(false);
   const [onRecord, toogleRecord] = useState(false);
   const [isLoading, toogLoading] = useState(false);
-
+  const [file, onSelectFiles] = useState([]);
+ 
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result) => {
+      setMessageInput(result);
+    },
+  });
+ 
     return (
       <div className='chatMonitorPanelContainer'> 
         <HeaderChatPanel name={'Генрих'} />
@@ -139,17 +144,23 @@ export default function ChatMonitorPanel(props) {
             }}
             sendMessage = {(e) => {console.log(e)}}
             toggleEmojiPicker = {(e) => { toogleEmojiPickerVisible(!emojiPickerVisible); }} 
-            onRecord = {(e) => { toogleRecord(!onRecord); }} 
-            onHideRecording = {(e) => {console.log(e)}} 
+            onRecord = {(e) => { toogleRecord(!onRecord); }}  
+            onHideRecording = {(e) => { toogleRecord(!onRecord); }} 
             isLoading = {isLoading}
             // attachments={[{
             //   filename: 'logo',
             //   url:'https://source.unsplash.com/100x100/?random=1&nature,water'
+            // },{
+            //   filename: 'logo',
+            //   url:'https://source.unsplash.com/100x100/?random=2&nature,water'
             // }]}
-            attachments={[]}
-            onSelectFiles={[]}
-            isRecording={false}  
-            removeAttachment={[]} 
+            attachments={file}
+            onSelectFiles={onSelectFiles}
+            isRecording={onRecord}  
+            removeAttachment={() => {}}  
+            listening={listening}
+            listen={listen}
+            stop={stop}
           />
         </div>   
       </div>

@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
-import './style.css'; 
+import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input } from 'antd';
 import ChatMenuGroup from '../ChatMenuGroup';
- import Dialogs from '../Dialogs';
+import ChatSideBar from '../ChatSideBar';
+import Dialogs from '../Dialogs';
+import { getDialogsAll } from '../../redux/actions/dialogs'
+import './style.css'; 
 
 function ChatGroupMessagePanel(props) { 
   const { Search } = Input;
   const [activeItem, setActiveItem] = useState(0);
+  const [rooms, setItemRooms] = useState([{id:'1', title: 'Все'}, {id:'2', title: 'Общая'}]);
   // const [serchDialogValue, onSearch] = useState('');
+  const dispatch = useDispatch();  
 
-//  console.log(serchDialogValue)
+  useEffect(() => {    
+    // dispatch(getDialogsAll(1)); 
+  },[]);
+ 
     return (
       <div className='chatGroupMessagePanelContainer'> 
+        <ChatSideBar dialogs={[1,1,1,1,321,12,213,213]} onClick={(active) => {
+          setActiveItem(active)
+        }} /> 
         <div className='searchChatContainer'>
-          <Search placeholder="поиск чатов" allowClear onSearch={(value) => console.log(value)} style={{ width: 280 }} /> 
+          <Search placeholder="поиск диалогов" allowClear onSearch={(value) => console.log(value)} style={{ width: 280 }} /> 
         </div>
         <div className='searchChatMenu'>
-          <ChatMenuGroup activeItem={activeItem} itemMenu={['Все', 'Непрочитанные','Мои','Другие','Новые']} onClick={(active) => {
+          <ChatMenuGroup activeItem={activeItem} itemMenu={['Все','Общая','Обьявления','Доска позора']} onClick={(active) => {
             setActiveItem(active)
           }} /> 
         </div>
@@ -48,7 +59,8 @@ function ChatGroupMessagePanel(props) {
             userId={'165234'} 
             onSearch={e => console.log(e)} 
             inputValue={'1'} 
-            currentDialogId={'1'} />
+            currentDialogId={'1'}
+          />
         </div>
       </div>
     );

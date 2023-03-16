@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'; 
+import { Routes, Route } from 'react-router-dom';  
 
 import { 
   MainScreen,
@@ -7,17 +7,21 @@ import {
   ShopScreen,
   ShopCategoriesScreen,
   ChatScreen
-} from '../Screens';   
+} from '../Screens';  
+
+
 import { LocationContextProvider } from './costomNavigation';
 
 const Main = (props) => {
 
-  const { scroll } = props
+  const { mobile, isAuth, scroll } = props;  
+
   return (
     <main>
      <LocationContextProvider> 
         <Routes>   
           <Route path='/' element={<MainScreen scroll={scroll} />}/> 
+          {/* isAuth ? <AccountScreen mobile={mobile}  /> : <SigninScreen mobile={mobile} /> */}
           <Route exact path='/myhome/chat' element={<ChatScreen scroll={scroll} />}/>
           {/* <Route exact path='/myhome/uk' element={<UKScreen scroll={scroll} />}/>
           <Route exact path='/gkh/:item' element={<MainScreen scroll={scroll} />}/>

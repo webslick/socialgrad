@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Icon from '@ant-design/icons';
-import { Popover, Button } from 'antd';
-import { Emoji } from 'emoji-mart';
-import reactStringReplace from 'react-string-replace';
+import Icon, { EllipsisOutlined } from '@ant-design/icons'; 
+import { Popover, Button } from 'antd'; 
 
 import { convertCurrentTime, isAudio } from '../../utils/helpers';
 import images from '../../assets/images'; 
@@ -12,7 +10,7 @@ import images from '../../assets/images';
 import Time from '../Time';
 import IconReaded from '../IconReaded';
 import Avatar from '../Avatar';
-
+import { useSpeechSynthesis } from 'react-speech-kit';
 import './Message.scss';
 
 const { waveSvg, playSvg, pauseSvg } = images;
@@ -22,7 +20,7 @@ const MessageAudio = ({ audioSrc }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-
+ 
   const togglePlay = () => {
     if (!isPlaying) {
       audioElem.current.play();
@@ -96,9 +94,22 @@ const Message = ({
   attachments,
   isTyping,
   onRemoveMessage,
-  setPreviewImage,
+  setPreviewImage
 }) => {
    
+  const [showCancelSpeakBtn, toogCancelSpeakBtn] = useState(false);
+
+  function test(e) {
+    toogCancelSpeakBtn('!!!')
+    console.log(e)
+  }
+
+  const { speak, cancel } = useSpeechSynthesis({
+    onEnd: () => { 
+      test(showCancelSpeakBtn); 
+    },
+  });
+ 
 
   const renderAttachment = item => {
     if (item.ext !== 'webm') {
@@ -119,27 +130,37 @@ const Message = ({
     }
   };
 
+  console.log(showCancelSpeakBtn)
+  
   return (
-    <div
+    <div 
       className={classNames('message', {
         'message--isme': isMe,
+        'message--nome': !isMe,
         'message--is-typing': isTyping,
         'message--is-audio': isAudio(attachments),
         'message--image': !isAudio(attachments) && attachments && attachments.length === 1 && !text,
       })}>
       <div className="message__content">
     
-        {/* <Popover
+        <Popover
           content={
             <div>
-              <Button onClick={onRemoveMessage}>Удалить сообщение</Button>
+              <div className='popoverBtnContainer'>
+                {
+                  showCancelSpeakBtn ? <Button block danger onClick={() => { cancel();toogCancelSpeakBtn(true); }}>Остановить озвучку</Button> : <Button block onClick={() => { speak({ text }); toogCancelSpeakBtn(!showCancelSpeakBtn);}}>Озвучить сообщение</Button>
+                } 
+              </div>
+              <div className='popoverBtnContainer'>
+                <Button block danger onClick={onRemoveMessage}>Удалить сообщение</Button>
+              </div> 
             </div>
           }
           trigger="click">
           <div className="message__icon-actions">
-            <Button type="link" shape="circle" icon="ellipsis" />
+            <Button type="prymari" shape="circle" size="small" icon={<EllipsisOutlined />} />
           </div>
-        </Popover> */}
+        </Popover>
 
         <div className="message__avatar">
           <Avatar user={user} />
@@ -151,9 +172,7 @@ const Message = ({
               
               {text && (
                 <p className="message__text">
-                  {reactStringReplace(text, /:(.+?):/g, (match, i) => (
-                    <Emoji key={i} emoji={match} set="apple" size={16} />
-                  ))}
+                  {text}
                 </p>
               )}
               {isTyping && (

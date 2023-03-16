@@ -35,10 +35,12 @@ const items = [
 const { logo } = images;
 
 export default function ChatMenuPanel(props) { 
+
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+  
     return (
       <div className='chatMenuPanelContainer'>  
         <div className='logoChatContainer'>

@@ -16,7 +16,7 @@ export default function CardsPrice(props) {
       </div>
       <div className="CardsItemBottom"> 
         <div className="txtCardsAbout">{description}</div> 
-        <RegistrationButton margin="20px 0px 0px 0px" text={txtbtn} onClick={() => {}} />
+        <RegistrationButton color={'#5daafd'} margin="20px 0px 0px 0px" text={txtbtn} onClick={() => {}} />
         {/* <Link style={{ textDecoration: 'none' }} to={"/shop"}><OrangeButton margin="20px 0px 0px 0px" text={txtbtn} onClick={() => {}} /></Link>  */}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import ChatMenuPanel from '../../components/ChatMenuPanel'
-import ChatGroupMessagePanel from '../../components/ChatGroupMessagePanel'
-import ChatMonitorPanel from '../../components/ChatMonitorPanel'
+import ChatMenuPanel from '../ChatMenuPanel'
+import ChatGroupMessagePanel from '../ChatGroupMessagePanel'
+import ChatMonitorPanel from '../ChatMonitorPanel'
 import './style.css';
  
 export default function ChatMainField(props) { 

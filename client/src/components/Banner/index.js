@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import images from '../../assets/images';
 import './style.css';
-import { Link } from 'react-router-dom'; 
+import { HashRouter, Link, Route, Routes, useLocation  } from 'react-router-dom'; 
 import { pages } from '../../redux/selectors' 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Breadcrumb } from 'antd';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -14,8 +15,18 @@ import 'swiper/css/scrollbar';
 function Banner(props) {  
 
   const { banner }= images;
+  
   const { onClick, userName, subpage,page, headerhim, scroll} = props;
   
+
+  const breadcrumbNameMap = {
+    '/myhome': 'chat',
+    '/apps/1': 'Application1',
+    '/apps/2': 'Application2',
+    '/apps/1/detail': 'Detail',
+    '/apps/2/detail': 'Detail',
+  };
+
   const BannerArray = [
     { 
       title:"Национальный проект «Жилье и городская среда»",
@@ -28,9 +39,29 @@ function Banner(props) {
   ]; 
  
   const active  = useSelector(pages.active);  
-   
+
+  // const location = useLocation();
+  // const pathSnippets = location.pathname.split('/').filter((i) => i);
+  // const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+  //   const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+  //   return {
+  //     key: url,
+  //     title: <Link to={url}>{breadcrumbNameMap[url]}</Link>,
+  //   };
+  // });
+
+  
+  // const breadcrumbItems = [
+  //   {
+  //     title: <Link to="/">Home</Link>,
+  //     key: 'home',
+  //   },
+  // ].concat(extraBreadcrumbItems);
+  // console.log(breadcrumbItems)
     return (  
       <section className='subHeadMenu' >
+         {/* <Breadcrumb routes={breadcrumbItems} /> */}
+        
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/">Главная</a></li>

@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { Button, Menu } from 'antd'; 
-import images from '../../assets/images';
-
+import React, { useState } from 'react'; 
 import Message from '../Message'
 import './style.css';    
  
@@ -13,6 +10,7 @@ export default function MessageTextArea(props) {
       <div className='messageTextAreaContainer'>  
         {
           messages.map((item) => (<Message
+            key={item.user._id}
             user = {item.user}
             text = {item.text} 
             date = {item.date}
@@ -23,9 +21,9 @@ export default function MessageTextArea(props) {
             isTyping = {item.isTyping}
             onRemoveMessage = {item.onRemoveMessage}
             setPreviewImage = {item.setPreviewImage}
-            audio = {item.audio}
+            audio = {item.audio} 
           />))
-        }   
+        }  
       </div>
     );
 } 

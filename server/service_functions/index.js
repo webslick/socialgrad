@@ -1,6 +1,20 @@
-const Az = require('az');
-const moment = require('moment');
-
+// const Az = require('az');
+// const moment = require('moment'); 
+const UserDto = require('../dtos/user-dto'); 
+const AdminDto = require('../dtos/admin-dto');
+const CityDto = require('../dtos/city-dto');
+const DistrictDto = require('../dtos/district-dto');
+const GetIdLocationDto = require('../dtos/getidlocation-dto');
+const HomeDto = require('../dtos/home-dto');
+const LocationDto = require('../dtos/location-dto');
+const ProfileDto = require('../dtos/profile-dto');
+const RoleDto = require('../dtos/role-dto');
+const RoomDto = require('../dtos/room-dto'); 
+const SubscribeDto = require('../dtos/subscribe-dto');
+const WalletDto = require('../dtos/wallet-dto');
+const AuthDto = require('../dtos/auth-dto');
+const DialogDto = require('../dtos/street-dto');
+const ApiErr = require('../exeptions/api-error');
 async function noDubleElements(arr) {
   let arr_3 = arr.reduce((result, item) => {
     return result.includes(item) ? result : [... result, item];
@@ -8,18 +22,18 @@ async function noDubleElements(arr) {
   return arr_3;
 }
 
-function onlyUnique(value, index, self) { // Оставляет уникальные слова (убирает повторы)
-  return self.indexOf(value) === index;
-}
+// function onlyUnique(value, index, self) { // Оставляет уникальные слова (убирает повторы)
+//   return self.indexOf(value) === index;
+// }
 
-function getTags(pureContent) {  // разбивает строку на слова
-  const tokens = Az.Tokens(pureContent).done();
-  const tags = tokens.filter(t => t.type.toString() === 'WORD')
-  .map(t => t.toString().toLowerCase())
-  .filter(t => t)
-  .filter(onlyUnique);
-  return tags;
-}
+// function getTags(pureContent) {  // разбивает строку на слова
+//   const tokens = Az.Tokens(pureContent).done();
+//   const tags = tokens.filter(t => t.type.toString() === 'WORD')
+//   .map(t => t.toString().toLowerCase())
+//   .filter(t => t)
+//   .filter(onlyUnique);
+//   return tags;
+// }
 
 function getTime (count, type) { if (type === 'm') { return count * 60000 }; if (type === 'h') { return count * 60000 * 60 } };
 
@@ -45,9 +59,9 @@ const convertSeconds = (time) => { // Конвертирует секунды
   }
 }
 
-const differentsTimeOff = (now,last) => { // разность времён
-  return moment(last).diff(now);
-}
+// const differentsTimeOff = (now,last) => { // разность времён
+//   return moment(last).diff(now);
+// }
 
 function searchInPosts (words,content) {
 
@@ -67,9 +81,94 @@ function searchInPosts (words,content) {
     return false;
   }
 }
+
+const getObjkey = (obj, objKey, innerKey) => {  // возвращает вложеную модель
+ 
+  let result = false
+  Object.keys(obj).map( item => {  
+    if(innerKey) {
+      if(item === objKey) {   
+        Object.keys(obj[item]).map((item_inner_name) => {
+          if(item_inner_name === innerKey) {   
+            result = obj[item][item_inner_name]  
+          } 
+        })  
+      } 
+    } else {   
+      if(item === objKey && obj[item] !== null && obj[item] !== undefined ) {  
+        result = obj[item] 
+      }
+    }
+  })   
+  return result;
+}
+
+
+const removeEmpty = (obj,dto) => { //удаляет все undefined обьекты  
+const ApiErr = require('../exeptions/api-error');
+let objTmp = {}
+  switch (dto) {
+    case 'Users':
+      objTmp = new AdminDto(obj)
+      break;
+    case 'Profiles':
+      objTmp = new ProfileDto(obj)
+      break;
+    case 'Homes':
+      objTmp = new HomeDto(obj)
+      break;
+    case 'Wallets': 
+      objTmp = new WalletDto(obj)
+      break;
+    case 'Subscribes':
+      objTmp = new SubscribeDto(obj)
+      break;
+    case 'AuthInfos':
+      objTmp = new AuthDto(obj)
+      break;
+    case 'Roles': 
+      objTmp = new RoleDto(obj)
+      break;
+    case 'Regions':
+      objTmp = new LocationDto(obj)
+      break;
+    case 'Citys':
+      objTmp = new LocationDto(obj)
+      break;
+    case 'Districts':
+      objTmp = new LocationDto(obj)
+      break;
+    case 'Streets':
+      objTmp = new LocationDto(obj)
+      break;
+  
+    default:
+      break;
+  }
+ 
+  let newObj = {};
+  Object.keys(objTmp).forEach((key) => {  
+    if (objTmp[key] === Object(objTmp[key])) newObj[key] = removeEmpty(objTmp[key]);
+    else if (objTmp[key] !== undefined) newObj[key] = objTmp[key];
+  });
+  return newObj;
+};
+
+const createLocationIfNot = async (objModel,item) => { 
+
+  const model = await objModel.findAll({ where: { name: item }, attributes: [ "id" ] });
+
+  if(model.length == 0) {  
+    if (!model) {  throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message) } 
+    return new GetIdLocationDto(await objModel.create({ name: item })).id 
+  } else {  return new GetIdLocationDto(model[0]).id }
+};
  
 module.exports = {
   getTime,
+  getObjkey,
+  removeEmpty,
   searchInPosts,
-  noDubleElements
+  noDubleElements,
+  createLocationIfNot
 } 

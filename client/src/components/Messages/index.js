@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 import { Empty, Spin } from 'antd';
 import classNames from 'classnames';
 
-import { Message } from '../';
+import { Message } from '..';
 
 import './Messages.scss';
 

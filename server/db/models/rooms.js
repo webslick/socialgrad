@@ -5,15 +5,12 @@ const {
 module.exports = (sequelize, DataTypes) => {
   
   class Rooms extends Model {  
-    static associate(models) { 
-      // Rooms.belongsToMany(models.Users, { foreignKey: 'roomId', through: 'userRooms', as: 'Users' });
+    static associate(models) {  
+      Rooms.hasOne(models.RoomTypes, { foreignKey: 'typeId', as: 'RoomTypes' });
     }
   }
 
-  Rooms.init({
-    roomName: DataTypes.STRING,
-    roomId: DataTypes.STRING,
-  }, {
+  Rooms.init({}, {
     sequelize,
     modelName: 'Rooms',
   });

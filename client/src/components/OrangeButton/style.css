@@ -1,0 +1,25 @@
+.wrapperOrangeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+  7px 7px 20px 0px rgba(0,0,0,.1),
+  4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+  border: none;
+  overflow: hidden;    
+}
+
+.textOrangeButton {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: system-ui;
+  color: white;
+  user-select: none;
+}
+
+.wrapperOrangeButton:hover {
+  opacity: .7;
+}

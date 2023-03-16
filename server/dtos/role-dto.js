@@ -1,12 +1,10 @@
-module.exports = class RoleDto {
+module.exports = class RoleDto { 
   id;
-  role_name; 
-  users; 
+  role;  
 
-  constructor(model) {   
-    this.user_id = model.id; 
-    this.role_name = model.role_name; 
-    this.users = model.users;  
+  constructor(model) {    
+    this.id = model?.id;    
+    this.role = model?.role_name;    
   } 
 }
  

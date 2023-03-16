@@ -14,12 +14,13 @@
     },
     "port": 4000,
     "KEYS": {
-      "JWT_SECRET_KEY_ACCESS": "JWT_SECRET_KEY_ACCESS",
-      "JWT_SECRET_KEY_REFRESH": "JWT_SECRET_KEY_REFRESH"
+      "JWT_SECRET_KEY_ACCESS": "JWT_SECRET_KEY_ACCESS_SOCIALGRAD",
+      "JWT_SECRET_KEY_REFRESH": "JWT_SECRET_KEY_REFRESH_SOCIALGRAD"
     },
     "URL" : {
       "API" : "http://localhost:3000",  
-      "CLIENT" : "http://localhost:3000"  
+      "CLIENT" : "http://localhost:3000",
+      "ACTIVATIOLINK":"https://socialgrad.ru"  
     }
   }
 }

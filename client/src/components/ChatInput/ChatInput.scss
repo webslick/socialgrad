@@ -12,9 +12,13 @@
     margin-right: 15px;
   }
 
-  &__record-btn { 
+  &__voismesages-btn { 
     align-self: flex-end;
     margin-right: 15px;
+  }
+
+  &__record-btn { 
+    align-self: flex-end; 
   }
 
   .ant-btn-circle {
@@ -40,15 +44,13 @@
     color: #f56b6b;
 
     .stop-recording {
-      margin-left: 5px;
-      i {
+      margin-left: 5px; 
         svg {
           position: relative;
-          top: -1px;
+          top: 0px;
           width: 14px;
           height: 14px;
-        }
-      }
+        } 
     }
 
     &-bubble {
@@ -83,13 +85,24 @@
   &__actions {
     display: flex;
     align-items: flex-end;
-    width: 80px;
-    justify-content: space-between;
-    margin-left: 15px;
+    width: 100px;
+    justify-content: space-between; 
+    .anticon-send {
+      svg {
+        position: relative;
+        left: 2px;
+        width: 19px;
+        height: 19px;
+      } 
+    }
 
     &-upload-btn {
+      margin: 0px 10px;
       cursor: pointer;
-      input {
+      input { 
+        &::-webkit-file-upload-button {
+          cursor:pointer;
+        }
         cursor: pointer;
       }
       &:hover {

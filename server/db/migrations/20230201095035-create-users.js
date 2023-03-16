@@ -6,14 +6,8 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      login: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-      },
+        type: Sequelize.INTEGER 
+      },   
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -28,3 +22,4 @@ module.exports = {
     await queryInterface.dropTable('Users');
   }
 };
+ 

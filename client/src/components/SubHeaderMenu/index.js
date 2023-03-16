@@ -138,7 +138,7 @@ function SubHeaderMenu(props) {
   },[]);
 
   const active  = useSelector(pages.active);  
-   
+   console.log(scroll)
     return ( 
       <section>
         <Banner />

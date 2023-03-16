@@ -1,0 +1,33 @@
+
+ .circlewrapper {
+  display: flex;
+  width: 80px;
+  height: 55px;
+  margin: 20px;
+  justify-content: center;
+  background-color: #81c3e3;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgb(94 156 236);
+  cursor: pointer;
+  box-sizing: border-box;
+ }
+
+ .mobileCirclewrapper {
+  display: flex;
+  width: 80px;
+  height: 75px;
+  justify-content: center;
+  background-color: #81c3e3;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgb(94 156 236);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+ 
+ .circlecount{
+  color: white;
+  font-size: 25px;
+  font-weight: 700;
+ }

@@ -2,6 +2,7 @@ import ActionTypes from '../constants';
 
 const initialState = {
   user: {},
+  users_home: [],
   isAuth: false,
 };
 
@@ -11,6 +12,11 @@ export default function users(state = initialState, {type,payload}) {
       return {
         ...state,
         user: payload,
+      };
+    case ActionTypes.USERS_PUT_USERS_HOME:
+      return {
+        ...state,
+        users_home: payload,
       };
     case ActionTypes.USERS_PUT_ISAUTH:
       return {

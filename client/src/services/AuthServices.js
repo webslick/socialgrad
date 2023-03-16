@@ -6,8 +6,8 @@ export default class AuthServices {
       return api.main_api.post('/login', { email, password })
   }
 
-  static async registration(email,password) {
-      return api.main_api.post('/registration', { email, password })
+  static async registration(login, password, name, lastname, gender, email, region, city, district, street, number,) { 
+      return api.main_api.post('/registration', { login, password, name, lastname, gender, email, region, city, district, street, number, })
   }
 
   static async logout() {

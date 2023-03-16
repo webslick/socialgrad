@@ -1,7 +1,8 @@
 const ApiErr = require('../exeptions/api-error');
-const tokenService = require('../services/token-service.js');
+const adminService = require('../services/admin-service');
 module.exports = function (err,req,res,next) {
   try {
+    console.log( req.headers)
     const autorizationHeader = req.headers.authorization;
     if(!autorizationHeader) {
       return next(ApiErr.UnautorizaedError());
@@ -10,7 +11,7 @@ module.exports = function (err,req,res,next) {
     if(!accessToken) {
       return next(ApiErr.UnautorizaedError());
     }
-    const userData = tokenService.validateAccesToken(accessToken);
+    const userData = adminService.validateAccesToken(accessToken);
     if(!userData) {
       return next(ApiErr.UnautorizaedError());
     }
