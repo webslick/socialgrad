@@ -23,11 +23,11 @@ const renderLastMessage = (message, userId) => {
     text = message.text;
   }
 
-  return `${message.user._id === userId ? 'Вы: ' : ''}${text}`;
+  return `${message.user.id === userId ? 'Вы: ' : ''}${text}`;
 };
 
 const DialogItem = ({
-  _id,
+  id,
   undread,
   created_at,
   text,
@@ -37,11 +37,11 @@ const DialogItem = ({
   lastMessage,
   userId,
 }) => (
-  <Link to={`/dialog/${_id}`}>
+  // <Link to={`/dialog/${id}`}>
     <div
       className={classNames('dialogs__item', {
         'dialogs__item--online': partner.isOnline,
-        'dialogs__item--selected': currentDialogId === _id,
+        'dialogs__item--selected': currentDialogId === id,
       })}>
       <div className="dialogs__item-avatar">
         <Avatar user={partner} />
@@ -62,7 +62,7 @@ const DialogItem = ({
         </div>
       </div>
     </div>
-  </Link>
+  // </Link>
 );
 
 export default DialogItem;

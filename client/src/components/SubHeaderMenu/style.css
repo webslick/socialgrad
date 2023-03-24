@@ -23,7 +23,7 @@ a:-webkit-any-link {
 }
 
 .container nav {
-  height: 80px;
+  height: auto;
 }
  
 nav a {

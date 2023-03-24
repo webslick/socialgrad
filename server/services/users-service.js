@@ -8,6 +8,7 @@ const serviceFunction = require('../service_functions/index')
 const config = require('config'); 
 const adminService = require('../services/admin-service')
 const userService = require('../services/users-service')
+const roomService = require('../services/room-service')
 const jwt = require('jsonwebtoken'); 
 const keys_access = config.get('Server.KEYS.JWT_SECRET_KEY_ACCESS');
 const keys_refresh = config.get('Server.KEYS.JWT_SECRET_KEY_REFRESH');  
@@ -47,6 +48,18 @@ const storage = multer.diskStorage({
 const uploader = multer({storage: storage}).any();
 
 
+
+const differentObjArays = (a, b) => { 
+  // b diff a
+  let resultA = b.filter(elm => !a.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm))); 
+
+  // a diff b
+  let resultB = a.filter(elm => !b.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));   
+ 
+  let result = [...resultA, ...resultB];  
+  return result
+}
+ 
 // const Remove = function (path) {
 //   try {
 //       fs.unlinkSync(path);
@@ -58,47 +71,93 @@ const uploader = multer({storage: storage}).any();
  
 // const random = (min, max) => {
 //   return Math.floor(Math.random() * (max - min + 1) ) + min;
-// }
-  
+// } 
+
 class UserService {
  
   async login(login, password) {
     try {
       const condidate = await DB.searchInTables('users_list_registration',login); 
+
       if(!condidate) {
         throw ApiErr.BadRequest(`Пользователь не найден необходимо: `);
       } else {
-        
+         
         const isPassEquals = await bcrypt.compare(password,serviceFunction.removeEmpty(condidate, 'AuthInfos').password);
+        
         if(!isPassEquals) {
           throw ApiErr.BadRequest(`Неверный пароль повторите ввод: `);
         }
-  
+       
         let result = {};  
- 
+        let result_users_home = [];   
+        let all_rooms = []  
+        let join_rooms = []  
+
         const user = await DB.searchInTables('user_me', serviceFunction.removeEmpty(condidate, 'AuthInfos').id );  
-    
+ 
         if(!user) {
           throw ApiErr.BadRequest(`Пользователь не найден необходимо: `);
-        }
- 
-          result = { 
-            ...serviceFunction.removeEmpty(user, 'User'),  
-            ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes'), 
-            ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Wallets',false),'Wallets'), 
-            ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Subscribes',false), 'Subscribes'), 
-            ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos'), 
+        } 
+
+        serviceFunction.getObjkey(user,'RoomTypes').map(async item_room => {  
+          join_rooms.push({ ...serviceFunction.removeEmpty(item_room, 'RoomTypes') }) 
+        })
+     
+        serviceFunction.getObjkey(user,'Homes','RoomTypes').map(async item_room => {  
+          all_rooms.push(serviceFunction.removeEmpty(item_room, 'RoomTypes'))   
+        })
+       
+        differentObjArays(all_rooms,join_rooms).map(async item_room => { 
+    
+          const joinRoom = await DB.addInTables('join_room', { 
+            userId: user.id, 
+            roomId: item_room.roomId
+          }); 
+     
+          join_rooms.push({ ...serviceFunction.removeEmpty(joinRoom, 'UsersRooms') }) 
+    
+        }) 
+       
+        
+        console.log(await roomService.getMessageRoom({ userId: user.id,roomId: join_rooms[0].roomId}));
+
+
+        result = { 
+          ...serviceFunction.removeEmpty(user, 'Users'),  
+          ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes'), 
+          ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Wallets',false),'Wallets'), 
+          ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Subscribes',false), 'Subscribes'), 
+          ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos'), 
+    
+          ...serviceFunction.removeEmpty(user.Profiles,'Profiles'),  
+           
+          role: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles').role,  
+          all_rooms,  
+          join_rooms,  
+          region: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Regions'), 'Regions').name ,  
+          city: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys').name ,  
+          district: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Districts'), 'Districts').name , 
+          street: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets').name ,  
+        }; 
+     
+        const users_home_id = await DB.searchInTables('users_home_id', { city: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys').id, street: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets').id, number: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes').number} );  //массив айдишников пользователей проживающих в одном доме  
+        const userids = []
+        users_home_id.map(model => { userids.push({ id: model.id }) })
       
-            ...serviceFunction.removeEmpty(user.Profiles,'Profile'),   
-            ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles'),   
-      
-            region: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Regions'), 'Regions') },  
-            city: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys') },  
-            district: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Districts'), 'Districts') }, 
-            street: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets') },  
-          };  
- 
+        const users_home = await DB.searchInTables('users_home',{ userids, notid: result.id } );  //массив пользователей проживающих в одном доме  
+     
+        users_home.map((item_user) => {  
+          result_users_home.push({
+            ...serviceFunction.removeEmpty(item_user, 'Users'),  
+            ...serviceFunction.removeEmpty(item_user.Profiles,'Profiles'), 
+          }) 
+        })
+     
+        result.users_home = result_users_home;
+     
           if(serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos').refreshToken === '') {
+      
             const tokens = adminService.generateToken({ login: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos').login, userId: serviceFunction.removeEmpty(user,'Users').id, role: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles').role}) 
             
             const update_token = await DB.updateModelTables(serviceFunction.getObjkey(user,'AuthInfos',false),{
@@ -154,6 +213,10 @@ class UserService {
     }
 
     let result = {};  
+    let result_users_home = [];   
+    let all_rooms = []  
+    let join_rooms = []   
+    
      const userData = adminService.validateRefreshToken(refreshToken);  
      const tokenFromDB = await DB.searchInTables('user_token',refreshToken); 
 
@@ -163,21 +226,57 @@ class UserService {
     
     const user = await DB.searchInTables('user_me', userData.userId );
 
+    serviceFunction.getObjkey(user,'RoomTypes').map(async item_room => {  
+      join_rooms.push({ ...serviceFunction.removeEmpty(item_room, 'RoomTypes') }) 
+    })
+ 
+    serviceFunction.getObjkey(user,'Homes','RoomTypes').map(async item_room => {  
+      all_rooms.push(serviceFunction.removeEmpty(item_room, 'RoomTypes'))   
+    })
+   
+     differentObjArays(all_rooms,join_rooms).map(async item_room => { 
+
+      const joinRoom = await DB.addInTables('join_room', { 
+        userId: user.id, 
+        roomId: item_room.roomId
+      }); 
+ 
+      join_rooms.push({ ...serviceFunction.removeEmpty(joinRoom, 'UsersRooms') }) 
+
+    }) 
+  
     result = { 
-      ...serviceFunction.removeEmpty(user, 'User'),  
+      ...serviceFunction.removeEmpty(user, 'Users'),  
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes'), 
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Wallets',false),'Wallets'), 
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Subscribes',false), 'Subscribes'), 
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos'), 
 
-      ...serviceFunction.removeEmpty(user.Profiles,'Profile'),   
-      ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles'),   
-
-      region: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Regions'), 'Regions') },  
-      city: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys') },  
-      district: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Districts'), 'Districts') }, 
-      street: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets') },   
-    };  
+      ...serviceFunction.removeEmpty(user.Profiles,'Profiles'),  
+       
+      role: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles').role,  
+      all_rooms,  
+      join_rooms,  
+      region: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Regions'), 'Regions').name ,  
+      city: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys').name ,  
+      district: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Districts'), 'Districts').name , 
+      street: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets').name ,  
+    }; 
+ 
+    const users_home_id = await DB.searchInTables('users_home_id', { city: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys').id, street: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets').id, number: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes').number} );  //массив айдишников пользователей проживающих в одном доме  
+    const userids = []
+    users_home_id.map(model => { userids.push({ id: model.id }) })
+  
+    const users_home = await DB.searchInTables('users_home',{ userids, notid: result.id } );  //массив пользователей проживающих в одном доме  
+ 
+    users_home.map((item_user) => {  
+      result_users_home.push({
+        ...serviceFunction.removeEmpty(item_user, 'Users'),  
+        ...serviceFunction.removeEmpty(item_user.Profiles,'Profiles'), 
+      }) 
+    })
+ 
+    result.users_home = result_users_home;
  
     if(serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos').refreshToken === '') {
  
@@ -206,8 +305,7 @@ class UserService {
   }
 
   async getMe(refreshToken) {  
-    // try { 
- 
+  
     if(!refreshToken) {
       throw ApiErr.UnautorizaedError();
     } 
@@ -219,104 +317,74 @@ class UserService {
     } 
 
     const user = await DB.searchInTables('user_me', userData.userId );  
-
+     
     let result = {};  
-    let result_users_home = [];  
-  
+    let result_users_home = [];   
+    let all_rooms = []  
+    let join_rooms = []  
+    
     if(!user) {
       throw ApiErr.BadRequest(`Пользователь не найден необходимо: `);
     }
+    
+    serviceFunction.getObjkey(user,'RoomTypes').map(async item_room => {  
+      join_rooms.push({ ...serviceFunction.removeEmpty(item_room, 'RoomTypes') }) 
+    })
+ 
+    serviceFunction.getObjkey(user,'Homes','RoomTypes').map(async item_room => {  
+      all_rooms.push(serviceFunction.removeEmpty(item_room, 'RoomTypes'))   
+    })
+   
+     differentObjArays(all_rooms,join_rooms).map(async item_room => { 
 
+      const joinRoom = await DB.addInTables('join_room', { 
+        userId: user.id, 
+        roomId: item_room.roomId
+      }); 
+ 
+      join_rooms.push({ ...serviceFunction.removeEmpty(joinRoom, 'UsersRooms') }) 
+
+    }) 
+  
     result = { 
-      ...serviceFunction.removeEmpty(user, 'User'),  
+      ...serviceFunction.removeEmpty(user, 'Users'),  
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes'), 
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Wallets',false),'Wallets'), 
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Subscribes',false), 'Subscribes'), 
       ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos'), 
 
-      ...serviceFunction.removeEmpty(user.Profiles,'Profile'),   
-      ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles'),   
-
+      ...serviceFunction.removeEmpty(user.Profiles,'Profiles'),  
+       
+      role: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles').role,  
+      all_rooms,  
+      join_rooms,  
       region: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Regions'), 'Regions').name ,  
       city: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys').name ,  
       district: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Districts'), 'Districts').name , 
       street: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets').name ,  
-    };  
+    }; 
  
     const users_home_id = await DB.searchInTables('users_home_id', { city: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys').id, street: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets').id, number: serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes').number} );  //массив айдишников пользователей проживающих в одном доме  
     const userids = []
     users_home_id.map(model => { userids.push({ id: model.id }) })
   
-    const users_home = await DB.searchInTables('users_home',userids );  //массив пользователей проживающих в одном доме  
+    const users_home = await DB.searchInTables('users_home',{ userids, notid: result.id } );  //массив пользователей проживающих в одном доме  
  
-    users_home.map((item_user) => { 
+    users_home.map((item_user) => {  
       result_users_home.push({
         ...serviceFunction.removeEmpty(item_user, 'Users'),  
         ...serviceFunction.removeEmpty(item_user.Profiles,'Profiles'), 
       }) 
     })
-
+ 
     result.users_home = result_users_home;
-
- console.log(result_users_home);
-      // const tokens = tokenService.generateToken({...userDto});
-      // await tokenService.saveToken(userDto.userId,tokens.refreshToken);
-      // return {
-      //   ...tokens,
-      //   user: userDto
-      // }
-    return { 
-      user: result 
-    }
- 
-    // } catch(e) {
-    //    throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
-    // } 
-  
-  }
-
-  async getUsersFromHome(city, street, number,cookies) {  
-   console.log(city, street, number,cookies);
-    // if(!refreshToken) {
-    //   throw ApiErr.UnautorizaedError();
-    // } 
-
-    // const userData = adminService.validateRefreshToken(refreshToken);  
- 
-    // if(!userData) {
-    //   throw ApiErr.UnautorizaedError();
-    // } 
-
-    // const user = await DB.searchInTables('user_me', userData.userId );  
-
-    // let result = {};  
-  
-    // if(!user) {
-    //   throw ApiErr.BadRequest(`Пользователь не найден необходимо: `);
-    // }
-
-    // result = { 
-    //   ...serviceFunction.removeEmpty(user, 'User'),  
-    //   ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes',false), 'Homes'), 
-    //   ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Wallets',false),'Wallets'), 
-    //   ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Subscribes',false), 'Subscribes'), 
-    //   ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'AuthInfos',false), 'AuthInfos'), 
-
-    //   ...serviceFunction.removeEmpty(user.Profiles,'Profile'),   
-    //   ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Profiles','Roles'), 'Roles'),   
-
-    //   region: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Regions'), 'Regions') },  
-    //   city: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Citys'), 'Citys') },  
-    //   district: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Districts'), 'Districts') }, 
-    //   street: { ...serviceFunction.removeEmpty(serviceFunction.getObjkey(user,'Homes','Streets'), 'Streets') },  
-    // };  
  
     return { 
-      user: result 
+      ...result 
     }
- 
+   
   }
-
+ 
   // async getProducts(categories) {
   //   const productData = await DB.searchInTables('categories',{ categories: categories });
   //   return productData;

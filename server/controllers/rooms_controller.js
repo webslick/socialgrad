@@ -1,5 +1,6 @@
 const roomService = require('../services/room-service');  
-
+const { nanoid } = require('nanoid');
+// Для работы IO необходимы СТРЕЛОЧНЫЕ функции у класса!!
 module.exports = class RoomsController  {
   io; 
 
@@ -7,7 +8,7 @@ module.exports = class RoomsController  {
     this.io = io; 
   }
  
-  async listRooms(req,res,next) {
+  listRooms = async (req,res,next) => {
     try { 
       const rooms_list = await roomService.list();
 
@@ -17,27 +18,29 @@ module.exports = class RoomsController  {
     }
   }
  
-  async listMessages(req,res,next) {
+  listMessagesRoom = async (req,res,next) => {
+    const { roomId } = req.params; 
     try { 
-      const diaolog_list = await roomService.list();
+ 
+      const messages_list = await roomService.getMessageRoom(roomId);
 
-     return res.json(diaolog_list);
+     return res.json(messages_list);
     } catch (e) {
       next(e);
     }
   }
  
-  async listDiologs(req,res,next) {
+  listDiologsRoom = async (req,res,next) => {
+    const { userId } = req.params; 
     try { 
-      const diaolog_list = await roomService.list();
-
-     return res.json(diaolog_list);
+      const diaolog_list = await roomService.listDiologsRoom(userId); 
+      return res.json(diaolog_list);
     } catch (e) {
       next(e);
     }
   }
  
-  async getRoom(req,res,next) {
+  getRoom = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await roomService.getById(id); 
@@ -47,7 +50,7 @@ module.exports = class RoomsController  {
     }
   }
  
-  async getDialog(req,res,next) {
+  getDialog = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await roomService.getById(id); 
@@ -57,7 +60,7 @@ module.exports = class RoomsController  {
     }
   }
  
-  async getMessage(req,res,next) {
+  getMessage = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await roomService.getById(id); 
@@ -67,18 +70,23 @@ module.exports = class RoomsController  {
     }
   }
 
-  async addRoom(req,res,next) {
+  addRoom = async (req,res,next) => {
     try {   
-      const { 
-        typeName,
-        roomName,
-        creatorId 
-       } = req.body;
-
-      const room_add = await roomService.add({
-        typeName,
-        roomName,
-        creatorId 
+      const {  
+        city, 
+        street, 
+        number, 
+        roomName  
+       } = req.body; 
+       
+      const room_add = await roomService.addRoom({
+        id: nanoid(5),
+        city, 
+        street, 
+        number, 
+        roomName, 
+        typeName: "joint",
+        creatorId: 0 
       }); 
       return res.json(room_add);
     } catch (e) {
@@ -86,63 +94,66 @@ module.exports = class RoomsController  {
     }
   }
 
-  async addMessage(req,res,next) {
-    try {  
+  joinRoom = async (req,res,next) => {
+    try {   
       const { 
-        dialogId,
-        collaborator,
-        userId,
-        lastMessage,    
-        participantes,    
-        users,    
-        status,    
-        senderId,    
-        numSender,    
-        numRecipient  
+        userId, 
+        roomId 
        } = req.body;
-      const diaolog_add = await roomService.add({
-        dialogId,
-        collaborator,
-        userId,
-        lastMessage,    
-        participantes,    
-        users,    
-        status,    
-        senderId,    
-        numSender,    
-        numRecipient 
-       }); 
-      return res.json(diaolog_add);
+
+      const joinRoom = await roomService.joinRoom({
+        userId, 
+        roomId 
+      }); 
+      return res.json(joinRoom);
     } catch (e) {
       next(e);
     }
   }
 
-  async addDialog(req,res,next) {
+  addMessageRoom = async (req,res,next) => {
     try {  
       const { 
-        dialogId,
-        collaborator,
-        userId,
-        lastMessage,    
-        participantes,    
-        users,    
-        status,    
-        senderId,    
-        numSender,    
-        numRecipient  
-       } = req.body;
-      const diaolog_add = await roomService.add({
-        dialogId,
-        collaborator,
-        userId,
-        lastMessage,    
-        participantes,    
-        users,    
-        status,    
-        senderId,    
-        numSender,    
-        numRecipient 
+        userId, 
+        dialogId, 
+        roomId, 
+        text, 
+        type, 
+        filename, 
+        readed  
+       } = req.body; 
+      const messages_add = await roomService.addMessageRoom({
+        userId, 
+        dialogId, 
+        roomId, 
+        text, 
+        type, 
+        filename, 
+        readed  
+       }); 
+  
+       this.io.to(roomId).emit('SERVER: MESSAGES_ACCEPT', 'SUCCESS'); 
+      return res.json(messages_add);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  addDialog = async (req,res,next) => {
+    try {  
+      const {  
+        userId, 
+        roomId, 
+        collaborator,  
+        lastMessage, 
+        status
+       } = req.body; 
+      const diaolog_add = await roomService.addDialog({ 
+        userId, 
+        roomId, 
+        collaborator,  
+        lastMessage, 
+        status
        }); 
       return res.json(diaolog_add);
     } catch (e) {
@@ -150,7 +161,7 @@ module.exports = class RoomsController  {
     }
   }
   
-  async updateRoom(req,res,next) {
+  updateRoom = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -183,7 +194,7 @@ module.exports = class RoomsController  {
     }
   }
   
-  async updateDialog(req,res,next) {
+  updateDialog = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -216,7 +227,7 @@ module.exports = class RoomsController  {
     }
   }
   
-  async updateMessage(req,res,next) {
+  updateMessage = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -249,7 +260,7 @@ module.exports = class RoomsController  {
     }
   }
  
-  async deleteDialog(req,res,next) {
+  deleteDialog = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_delete = await roomService.delete(id); 
@@ -259,17 +270,29 @@ module.exports = class RoomsController  {
     }
   }
  
-  async deleteRoom(req,res,next) {
+  liaveRoom = async (req,res,next) => {
     try { 
-      const { id } = req.params; 
-      const diaolog_delete = await roomService.delete(id); 
-     return res.json(diaolog_delete);
+      const { roomId, userId } = req.body; 
+      const room_liave = await roomService.liaveRoom({ roomId, userId }); 
+      console.log(room_liave);
+     return res.json(room_liave);
     } catch (e) {
       next(e);
     }
   }
  
-  async deleteMessage(req,res,next) {
+  deleteRoom = async (req,res,next) => {
+    try { 
+      const { roomId } = req.body; 
+      const room_deleted = await roomService.deleteRoom({ roomId }); 
+      console.log(room_deleted);
+     return res.json(room_deleted);
+    } catch (e) {
+      next(e);
+    }
+  }
+ 
+  deleteMessage = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_delete = await roomService.delete(id); 

@@ -6,7 +6,7 @@ import { Popover, Button } from 'antd';
 
 import { convertCurrentTime, isAudio } from '../../utils/helpers';
 import images from '../../assets/images'; 
-
+import { nanoid } from 'nanoid';
 import Time from '../Time';
 import IconReaded from '../IconReaded';
 import Avatar from '../Avatar';
@@ -94,7 +94,8 @@ const Message = ({
   attachments,
   isTyping,
   onRemoveMessage,
-  setPreviewImage
+  setPreviewImage,
+  roomId
 }) => {
    
   const [showCancelSpeakBtn, toogCancelSpeakBtn] = useState(false);
@@ -115,7 +116,7 @@ const Message = ({
     if (item.ext !== 'webm') {
       return (
         <div
-          key={item._id}
+          key={item.id+nanoid(5)}
           onClick={() => setPreviewImage(item.url)}
           className="message__attachments-item">
           <div className="message__attachments-item-overlay">
@@ -126,7 +127,7 @@ const Message = ({
         </div>
       );
     } else {
-      return <MessageAudio key={item._id} audioSrc={item.url} />;
+      return <MessageAudio key={item.id+nanoid(5)} audioSrc={item.url} />;
     }
   };
 
@@ -163,7 +164,7 @@ const Message = ({
         </Popover>
 
         <div className="message__avatar">
-          <Avatar user={user} />
+          <Avatar user={user} roomId={roomId} />
         </div>
         <div className="message__info">
           {(text || isTyping) && (

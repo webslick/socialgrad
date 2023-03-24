@@ -23,7 +23,7 @@ const Sidebar = ({
   onChangeTextArea,
   onModalOk,
 }) => {
-  const options = users.map(user => <Option key={user._id}>{user.fullname}</Option>);
+  const options = users.map(user => <Option key={user.id}>{user.fullname}</Option>);
 
   return (
     <div className="chat__sidebar">
@@ -36,7 +36,7 @@ const Sidebar = ({
       </div>
 
       <div className="chat__sidebar-dialogs">
-        <Dialogs userId={user && user._id} />
+        <Dialogs userId={user && user.id} />
       </div>
       <Modal
         title="Создать диалог"

@@ -9,7 +9,9 @@ export const popup_login = {
 }
  
 export const app = {
-  mobile: (state) => state.app.mobile
+  mobile: (state) => state.app.mobile,
+  socket: (state) => state.app.socket,
+  work_data: (state) => state.app.work_data
 }
  
 export const pages = {
@@ -20,5 +22,13 @@ export const pages = {
  
 export const loader = {
   loading:(state) => state.loader.loading,
+}
+ 
+export const dialogs = {
+  dialog_active:(state) => state.dialogs.dialog_active,
+}
+ 
+export const rooms = {
+  room_active:(state) => state.rooms.room_active,
 }
  

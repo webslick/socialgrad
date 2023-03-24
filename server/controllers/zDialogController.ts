@@ -11,7 +11,7 @@ class DialogController {
   }
 
   index = (req: express.Request, res: express.Response): void => {
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     DialogModel.find()
       .or([{ author: userId }, { partner: userId }])
@@ -34,13 +34,13 @@ class DialogController {
 
   create = (req: express.Request, res: express.Response): void => {
     const postData = {
-      author: req.user._id,
+      author: req.user.id,
       partner: req.body.partner,
     };
 
     DialogModel.findOne(
       {
-        author: req.user._id,
+        author: req.user.id,
         partner: req.body.partner,
       },
       (err, dialog) => {
@@ -63,14 +63,14 @@ class DialogController {
             .then((dialogObj) => {
               const message = new MessageModel({
                 text: req.body.text,
-                user: req.user._id,
-                dialog: dialogObj._id,
+                user: req.user.id,
+                dialog: dialogObj.id,
               });
 
               message
                 .save()
                 .then(() => {
-                  dialogObj.lastMessage = message._id;
+                  dialogObj.lastMessage = message.id;
                   dialogObj.save().then(() => {
                     res.json(dialogObj);
                     this.io.emit('SERVER:DIALOG_CREATED', {
@@ -96,7 +96,7 @@ class DialogController {
 
   delete = (req: express.Request, res: express.Response): void => {
     const id: string = req.params.id;
-    DialogModel.findOneAndRemove({ _id: id })
+    DialogModel.findOneAndRemove({ id: id })
       .then((dialog) => {
         if (dialog) {
           res.json({

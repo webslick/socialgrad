@@ -8,31 +8,28 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      text: {
-        type: Sequelize.STRING
-      },
-      status: {
-        type: Sequelize.BOOLEAN
-      },
-      sender: {
-        type: Sequelize.STRING
-      },
-      senderId: {
-        type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'Users',
-        //   key: 'id',
-        //   as: 'collaborator'
-        // }
+      userId: {
+        type: Sequelize.INTEGER, 
       },
       dialogId: {
-        type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'Dialogs',
-        //   key: 'id',
-        //   as: 'dialogId'
-        // }
+        type: Sequelize.STRING(50),  
       },
+      roomId: {
+        type: Sequelize.STRING(50),  
+      },
+      text: {
+        type: Sequelize.STRING, 
+      },
+      type: {
+        type: Sequelize.STRING, 
+      },
+      filename: {
+        type: Sequelize.STRING, 
+      },
+      readed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      }, 
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -47,3 +44,4 @@ module.exports = {
     await queryInterface.dropTable('Messages');
   }
 };
+ 

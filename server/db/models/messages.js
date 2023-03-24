@@ -3,27 +3,22 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   
   class Messages extends Model {
-    static associate(models) {  
-      // Messages.belongsTo(models.Dialogs,{
-      //   foreignKey: 'dialogId',
-      //   as : 'chat'
-      // })
-      // Messages.belongsTo(models.Users,{
-      //   foreignKey: 'senderId',
-      //   as : 'user'
-      // })
-      // Messages.belongsTo(models.Dialogs, { foreignKey: 'userId', as: 'Dialogs' });
+    static associate(models) {   
+      Messages.belongsTo(models.Dialogs, { foreignKey: 'dialogId', as: 'Dialogs' }); 
+
+      // Messages.belongsTo(models.RoomTypes, { foreignKey: 'id', as: 'RoomTypes' }); 
+      Messages.belongsTo(models.RoomTypes, { foreignKey: 'roomId', as: 'RoomTypes' });
     }
   }
  
   Messages.init({
+    userId: DataTypes.INTEGER,
+    dialogId: DataTypes.STRING, 
+    roomId: DataTypes.STRING, 
     text: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
-    sender: DataTypes.STRING,
+    type: DataTypes.STRING,
     filename: DataTypes.STRING,
-    tipo: DataTypes.STRING,
-    senderId: DataTypes.INTEGER,
-    dialogId: DataTypes.INTEGER 
+    readed: DataTypes.BOOLEAN, 
   }, {
     sequelize,
     modelName: 'Messages',
@@ -31,4 +26,5 @@ module.exports = (sequelize, DataTypes) => {
    
   return Messages;
 };
+ 
  

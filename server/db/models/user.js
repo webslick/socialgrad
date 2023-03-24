@@ -10,9 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       Users.hasOne(models.Homes, { foreignKey: 'id', as: 'Homes' }); 
       Users.hasOne(models.Wallets, { foreignKey: 'walletId', as: 'Wallets' }); 
       Users.hasOne(models.Subscribes, { foreignKey: 'subId', as: 'Subscribes' }); 
-      Users.hasOne(models.Profiles, { foreignKey: 'id', as: 'Profiles' });  
-      // Users.belongsTo(models.Roles, { foreignKey: 'rolesId', as: 'Roles', targetKey: 'rolesId' }); 
-      // Users.belongsToMany(models.Rooms, { foreignKey: 'userId', through: 'userRooms', as: 'Rooms' });  
+      Users.hasOne(models.Profiles, { foreignKey: 'id', as: 'Profiles' });    
+      Users.belongsToMany(models.RoomTypes, { foreignKey: 'userId', through: 'UsersRooms' });  
     }
   }
   

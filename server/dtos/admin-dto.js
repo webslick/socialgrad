@@ -1,3 +1,4 @@
+const moment = require('moment'); 
 module.exports = class AdminDto {
    
   login;
@@ -26,6 +27,7 @@ module.exports = class AdminDto {
   flatsCount;  
   role; 
   id;
+ 
   constructor(model) {   
     this.id = model?.id; 
     this.login = model?.login; 
@@ -42,12 +44,12 @@ module.exports = class AdminDto {
     this.refreshToken = model?.refreshToken;  
     this.isActivated = model?.isActivated;  
     this.balance = model?.balance; 	 
-    this.startSub = model?.startSub;
+    this.startSub = moment(model?.startSub).format("YYYY-MM-DD HH:mm");
     this.active = model?.active;   
-    this.birthdate = model?.birthdate;
+    this.birthdate = moment(model?.birthdate).format("YYYY-MM-DD HH:mm");
     this.telephone = model?.telephone;  
     this.avatar = model?.avatar;  
-    this.last_seen = model?.last_seen;
+    this.last_seen = moment(model?.last_seen).format("YYYY-MM-DD HH:mm");
     this.index = model?.index;  
     this.floors = model?.floors; 
     this.entrancesCount = model?.entrancesCount;  

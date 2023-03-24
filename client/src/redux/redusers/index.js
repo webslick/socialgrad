@@ -4,6 +4,7 @@ import pages from './pages';
 import popup_login from './popup_login';
 import loader from './loader';  
 import dialogs from './dialogs';  
+import rooms from './rooms';  
 import app from './app'; 
 
 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   pages, 
   popup_login,
   loader,
-  dialogs
+  dialogs,
+  rooms
 });
 
 export default rootReducer;

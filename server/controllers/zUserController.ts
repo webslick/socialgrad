@@ -29,7 +29,7 @@ class UserController {
   };
 
   getMe = (req: express.Request, res: express.Response): void => {
-    const id: string = req.user && req.user._id;
+    const id: string = req.user && req.user.id;
     UserModel.findById(id, (err: any, user: IUser) => {
       if (err || !user) {
         return res.status(404).json({
@@ -58,7 +58,7 @@ class UserController {
 
   delete = (req: express.Request, res: express.Response): void => {
     const id: string = req.params.id;
-    UserModel.findOneAndRemove({ _id: id })
+    UserModel.findOneAndRemove({ id: id })
       .then((user: IUser | null) => {
         if (user) {
           res.json({

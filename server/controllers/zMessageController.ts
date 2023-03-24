@@ -37,7 +37,7 @@ class MessageController {
 
   index = (req: express.Request, res: express.Response): void => {
     const dialogId: string = req.query.dialog;
-    const userId: string = req.user._id;
+    const userId: string = req.user.id;
 
     this.updateReadStatus(res, userId, dialogId);
 
@@ -55,7 +55,7 @@ class MessageController {
   };
 
   create = (req: express.Request, res: express.Response): void => {
-    const userId: string = req.user._id;
+    const userId: string = req.user.id;
 
     const postData = {
       text: req.body.text,
@@ -82,8 +82,8 @@ class MessageController {
             }
 
             DialogModel.findOneAndUpdate(
-              { _id: postData.dialog },
-              { lastMessage: message._id },
+              { id: postData.dialog },
+              { lastMessage: message.id },
               { upsert: true },
               function (err) {
                 if (err) {
@@ -108,7 +108,7 @@ class MessageController {
 
   delete = (req: express.Request, res: express.Response): void => {
     const id: string = req.query.id;
-    const userId: string = req.user._id;
+    const userId: string = req.user.id;
 
     MessageModel.findById(id, (err, message: any) => {
       if (err || !message) {

@@ -163,15 +163,17 @@ a:-webkit-any-link {
 }
 
 .topMenu .tab {
+  display: flex; 
+  height: 80px; 
+  align-items: center;
   position: relative;
   max-width: 250px;
   font-weight: 600;
   font-size: 14px;
-  line-height: 22px;
-  display: block;
+  line-height: 22px; 
   text-align: center;
   margin: 0 auto;
-  color: #525252;
+  color: #525252; 
 }
 
 .navLink {
@@ -243,7 +245,7 @@ a:-webkit-any-link {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 60px;
+  top: 50px;
   right: 0px;
   width: 150px;
   border-radius: 10px;
@@ -264,6 +266,7 @@ a:-webkit-any-link {
 .colrowcontainer {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 
 

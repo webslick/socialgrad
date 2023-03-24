@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       Homes.belongsTo(models.Citys, { foreignKey: 'cityId', as: 'Citys' })
       Homes.belongsTo(models.Regions, { foreignKey: 'regionId', as: 'Regions' })
       Homes.belongsTo(models.Districts, { foreignKey: 'districtId', as: 'Districts' })
-      Homes.belongsTo(models.Streets, { foreignKey: 'streetId', as: 'Streets' }) 
+      Homes.belongsTo(models.Streets, { foreignKey: 'streetId', as: 'Streets' })  
+ 
+      Homes.belongsToMany(models.RoomTypes, { foreignKey: 'homeId', through: 'HomesRooms' });  
     }
   }
   

@@ -1,5 +1,6 @@
 const HomeService = require('../services/home-service');  
 
+// Для работы IO необходимы СТРЕЛОЧНЫЕ функции у класса!!
 module.exports = class HomeController  {
   io; 
 
@@ -7,7 +8,7 @@ module.exports = class HomeController  {
     this.io = io; 
   }
  
-  async listHomes(req,res,next) {
+  listHomes = async (req,res,next) => {
     try { 
       const homes_list = await HomeService.listHomes(); 
      return res.json(homes_list);
@@ -16,7 +17,7 @@ module.exports = class HomeController  {
     }
   }
  
-  async listFlats(req,res,next) {
+  listFlats = async (req,res,next) => {
     try { 
       const diaolog_list = await HomeService.list();
 
@@ -26,7 +27,7 @@ module.exports = class HomeController  {
     }
   }
  
-  async getHome(req,res,next) {
+  getHome = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await HomeService.getHome(id); 
@@ -36,7 +37,7 @@ module.exports = class HomeController  {
     }
   }
  
-  async getFlat(req,res,next) {
+  getFlat = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await HomeService.getFlat(id); 
@@ -46,7 +47,7 @@ module.exports = class HomeController  {
     }
   }
 
-  async addHome(req,res,next) {
+  addHome = async (req,res,next) => {
     try {  
       const {  
         index,  
@@ -76,7 +77,7 @@ module.exports = class HomeController  {
     }
   }
 
-  async addFlat(req,res,next) {
+  addFlat = async (req,res,next) => {
     try {  
       const {    
         number, 
@@ -96,7 +97,7 @@ module.exports = class HomeController  {
     }
   }
   
-  async updateHome(req,res,next) {
+  updateHome = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -129,7 +130,7 @@ module.exports = class HomeController  {
     }
   }
   
-  async updateFlat(req,res,next) {
+  updateFlat = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -162,7 +163,7 @@ module.exports = class HomeController  {
     }
   }
  
-  async deleteHome(req,res,next) {
+  deleteHome = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_delete = await HomeService.delete(id); 
@@ -172,7 +173,7 @@ module.exports = class HomeController  {
     }
   }
  
-  async deleteFlat(req,res,next) {
+  deleteFlat = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_delete = await HomeService.delete(id); 
@@ -180,10 +181,6 @@ module.exports = class HomeController  {
     } catch (e) {
       next(e);
     }
-  }
-       
-
-
-
+  } 
 }
  

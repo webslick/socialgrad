@@ -2,12 +2,12 @@ const LocationService = require('../services/location-service');
 
 module.exports = class LocationController  {
   io; 
-
+// Для работы IO необходимы СТРЕЛОЧНЫЕ функции у класса!!
   constructor(io) { 
     this.io = io; 
   }
  
-  async listRegion(req,res,next) {
+  listRegion = async (req,res,next) => {
     try { 
       const region_list = await LocationService.listRegion();
 
@@ -17,7 +17,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async listCitys(req,res,next) {
+  listCitys = async (req,res,next) => {
     try { 
       const city_list = await LocationService.listCitys();
 
@@ -27,7 +27,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async listStreet(req,res,next) {
+  listStreet = async (req,res,next) => {
     try { 
       const street_list = await LocationService.listStreet();
 
@@ -37,7 +37,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async listDistrict(req,res,next) {
+  listDistrict = async (req,res,next) => {
     try { 
       const district_list = await LocationService.listDistrict();
 
@@ -47,7 +47,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async getRegion(req,res,next) {
+  getRegion = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const region_id = await LocationService.getRegion(id); 
@@ -57,7 +57,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async getCity(req,res,next) {
+  getCity = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const city_id = await LocationService.getCity(id); 
@@ -67,7 +67,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async getDistrict(req,res,next) {
+  getDistrict = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const district_id = await LocationService.getDistrict(id); 
@@ -77,7 +77,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async getStreet(req,res,next) {
+  getStreet = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await LocationService.getStreet(id); 
@@ -87,7 +87,7 @@ module.exports = class LocationController  {
     }
   }
 
-  async addRegion(req,res,next) {
+  addRegion = async (req,res,next) => {
     try {  
       const { name } = req.body;
       const region_add = await LocationService.addRegion({ name }); 
@@ -97,7 +97,7 @@ module.exports = class LocationController  {
     }
   }
 
-  async addCity(req,res,next) {
+  addCity = async (req,res,next) => {
     try {  
       const { name } = req.body;
       const city_add = await LocationService.addCity({ name }); 
@@ -107,7 +107,7 @@ module.exports = class LocationController  {
     }
   } 
 
-  async addDistrict(req,res,next) {
+  addDistrict = async (req,res,next) => {
     try {  
       const { name } = req.body;
       const district_add = await LocationService.addDistrict({ name }); 
@@ -117,7 +117,7 @@ module.exports = class LocationController  {
     }
   } 
 
-  async addStreet(req,res,next) {
+  addStreet = async (req,res,next) => {
     try {  
       const { name } = req.body;
       const street_add = await LocationService.addStreet({ name }); 
@@ -127,7 +127,7 @@ module.exports = class LocationController  {
     }
   }
   
-  async updateRegion(req,res,next) {
+  updateRegion = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const { name } = req.body;   
@@ -140,7 +140,7 @@ module.exports = class LocationController  {
     }
   }
   
-  async updateCity(req,res,next) {
+  updateCity = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const { name } = req.body;   
@@ -153,7 +153,7 @@ module.exports = class LocationController  {
     }
   }
   
-  async updateStreet(req,res,next) {
+  updateStreet = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const { name } = req.body;   
@@ -166,7 +166,7 @@ module.exports = class LocationController  {
     }
   }
   
-  async updateDistrict(req,res,next) {
+  updateDistrict = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const { name } = req.body;   
@@ -179,7 +179,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async deleteCity(req,res,next) {
+  deleteCity = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const city_delete = await LocationService.deleteCity(id); 
@@ -189,7 +189,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async deleteRegion(req,res,next) {
+  deleteRegion = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const region_delete = await LocationService.deleteRegion(id); 
@@ -199,7 +199,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async deleteStreet(req,res,next) {
+  deleteStreet = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const street_delete = await LocationService.deleteStreet(id); 
@@ -209,7 +209,7 @@ module.exports = class LocationController  {
     }
   }
  
-  async deleteDistrict(req,res,next) {
+  deleteDistrict = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const district_delete = await LocationService.deleteDistrict(id); 

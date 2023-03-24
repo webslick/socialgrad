@@ -4,10 +4,8 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Profiles extends Model { 
-    static associate(models) {  
-      Profiles.belongsTo(models.Roles, { foreignKey: 'id', as: 'Roles' })
-      // Profiles.hasMany(models.Dialogs, { foreignKey: 'userId', as: 'Dialogs' });
-      // Profiles.belongsToMany(models.Roles, { foreignKey: 'userId', through: 'UsersRoles', as: 'Roles' });
+    static associate(models) {   
+      Profiles.belongsTo(models.Roles, { foreignKey: 'role', as: 'Roles' }) 
     }
   }
   Profiles.init({

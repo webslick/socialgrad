@@ -30,10 +30,10 @@ const Messages = ({
             items.map(item => (
               <Message
                 {...item}
-                isMe={user._id === item.user._id}
-                onRemoveMessage={onRemoveMessage.bind(this, item._id)}
+                isMe={user.id === item.user.id}
+                onRemoveMessage={onRemoveMessage.bind(this, item.id)}
                 setPreviewImage={setPreviewImage}
-                key={item._id}
+                key={item.id}
               />
             ))
           ) : (

@@ -1,19 +1,18 @@
 // const Az = require('az');
-// const moment = require('moment'); 
-const UserDto = require('../dtos/user-dto'); 
-const AdminDto = require('../dtos/admin-dto');
-const CityDto = require('../dtos/city-dto');
-const DistrictDto = require('../dtos/district-dto');
+const moment = require('moment');  
+const AdminDto = require('../dtos/admin-dto'); 
 const GetIdLocationDto = require('../dtos/getidlocation-dto');
 const HomeDto = require('../dtos/home-dto');
 const LocationDto = require('../dtos/location-dto');
 const ProfileDto = require('../dtos/profile-dto');
 const RoleDto = require('../dtos/role-dto');
-const RoomDto = require('../dtos/room-dto'); 
+const RoomDto = require('../dtos/room-dto');  
+const UsersRoomDto = require('../dtos/user_room-dto');  
 const SubscribeDto = require('../dtos/subscribe-dto');
 const WalletDto = require('../dtos/wallet-dto');
 const AuthDto = require('../dtos/auth-dto');
-const DialogDto = require('../dtos/street-dto');
+const DialogDto = require('../dtos/dialog-dto');
+const MessageDto = require('../dtos/messages-dto');
 const ApiErr = require('../exeptions/api-error');
 async function noDubleElements(arr) {
   let arr_3 = arr.reduce((result, item) => {
@@ -21,7 +20,7 @@ async function noDubleElements(arr) {
 }, []);
   return arr_3;
 }
-
+ 
 // function onlyUnique(value, index, self) { // Оставляет уникальные слова (убирает повторы)
 //   return self.indexOf(value) === index;
 // }
@@ -141,16 +140,29 @@ let objTmp = {}
     case 'Streets':
       objTmp = new LocationDto(obj)
       break;
+    case 'RoomTypes':  
+      objTmp = new RoomDto(obj)
+      break;
+    case 'UsersRooms':  
+      objTmp = new UsersRoomDto(obj)
+      break;
+    case 'Dialogs': 
+      objTmp = new DialogDto(obj)
+      break;
+    case 'Messages': 
+      objTmp = new MessageDto(obj)
+      break;
   
     default:
       break;
   }
  
   let newObj = {};
+
   Object.keys(objTmp).forEach((key) => {  
     if (objTmp[key] === Object(objTmp[key])) newObj[key] = removeEmpty(objTmp[key]);
     else if (objTmp[key] !== undefined) newObj[key] = objTmp[key];
-  });
+  }); 
   return newObj;
 };
 

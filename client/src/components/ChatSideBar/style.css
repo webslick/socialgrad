@@ -18,3 +18,40 @@
   font-size: 14px;
   color: #135d87;
 }
+
+.dialogs_chat_item {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  margin: 2px 0px;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+  padding: 0px 20px;
+  cursor: pointer;
+}
+
+.dialogs_chat_item:hover {
+ background-color: aliceblue;
+}
+
+.dialog_chat_item_avatar {
+  position: relative;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.dialog_chat_item_fio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin: 2px;
+}
+
+.dialogs_chat_item .avatar--symbol { 
+  line-height: 32px;
+  font-size: 12px; 
+}

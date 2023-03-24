@@ -1,11 +1,12 @@
 import React from "react"; 
-
+import { nanoid } from 'nanoid'
 import { generateAvatarFromHash } from "../../utils/helpers";
 
 import "./Avatar.scss";
 
-const Avatar = ({ user }) => {
-  if (user.avatar) {
+const Avatar = ({ user, roomId }) => { 
+  
+  if (user.avatar) { 
     return (
       <img
         className="avatar"
@@ -14,12 +15,12 @@ const Avatar = ({ user }) => {
       />
     );
   } else {
-    const { color, colorLighten } = generateAvatarFromHash(user._id);
+    const { color, colorLighten } = user.id === undefined ? { color:'', colorLighten: '' } : generateAvatarFromHash(roomId + user.id + roomId + user.id + roomId + user.id);
     const firstChar = user.fullname[0].toUpperCase();
     return (
       <div
         style={{
-          background: `linear-gradient(135deg, ${color} 0%, ${colorLighten} 96.52%)`
+          background: `linear-gradient(135deg, ${color} 0%, ${colorLighten} 96.52%)` 
         }}
         className="avatar avatar--symbol"
       >

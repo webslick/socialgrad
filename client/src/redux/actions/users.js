@@ -4,6 +4,7 @@ import ActionTypes from '../constants';
 import { API_URL } from '../../http'; 
 import moment from 'moment'; 
 import UsersServices from '../../services/UsersServices';
+import { loader_switch, setWorkData } from '../actions/app';
 
 export function set_user(user) {
   return {
@@ -47,12 +48,13 @@ export function set_enter_popup(enter) {
   }
 }
 
-export async function login (email,password,dispatch) {
+export async function login (login,password,dispatch) {
   try {
-    const response = await AuthServices.login(email,password);  
+    const response = await AuthServices.login(login,password);  
     localStorage.setItem('token_pfds',response.data.user.accessToken); 
     dispatch(set_user(response.data.user));
     dispatch(set_user_isauth(true));
+    dispatch(setWorkData(true));  
     dispatch(change_visible_popup(false))
     return response
   } catch (error) {
@@ -80,6 +82,7 @@ export async function checkAuth (dispatch) {
       localStorage.setItem('token_pfds',response.data.accessToken);
       dispatch(set_user(response.data.user));
       dispatch(set_user_isauth(true));
+      dispatch(setWorkData(true));  
     } catch (error) {
       console.log(error.response?.data?.message)
       return error.response?.status;
@@ -93,6 +96,7 @@ export async function logout (dispatch) {
       localStorage.removeItem('token_pfds');
       dispatch(set_user({}));
       dispatch(set_user_isauth(false));
+      dispatch(setWorkData(false));  
     } catch (error) {
       console.log(error.response?.data?.message)
     }
@@ -180,7 +184,7 @@ export async function forgot (email,dispatch) {
 } 
 
 export async function getMe (dispatch) { 
-    try {
+    try { 
       const response = await axios.get(`${API_URL}/user/me`, { withCredentials:true });
       console.log(response,'clientgetme')
       const user = response.data;  
@@ -188,7 +192,7 @@ export async function getMe (dispatch) {
     } catch (error) {
       console.log(error.response?.data?.message)
       return error.response?.status;
-    }
+    }  
 } 
 
 export async function getUsersFromHome (city, street, number, dispatch) { 

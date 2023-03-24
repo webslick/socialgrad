@@ -19,7 +19,7 @@ function SubHeaderMenu(props) {
           title:"ЧАТ ДОМА",
           key:"chat",
           rout:`${page}/chat`,
-          notification: true 
+          notification: false 
         },
         {
           title:"УПУРАВЛЯЮЩИЕ ОРГАНИЗАЦИИ",
@@ -138,7 +138,7 @@ function SubHeaderMenu(props) {
   },[]);
 
   const active  = useSelector(pages.active);  
-   console.log(scroll)
+  //  console.log(scroll)
     return ( 
       <section>
         <Banner />
@@ -150,11 +150,11 @@ function SubHeaderMenu(props) {
                   if (page === item.page) { 
                     return item.subpage.map(({ key, rout, title, notification }) => { 
                       return <Link key={key} to={rout}>
-                              <div className={`tab ${key === subpage ? 'active' : ''}`} onClick={(e) => { onClick(e) }}>
-                                <div id={key}>{title}</div>
-                                <div className={`${notification ? 'activenotife' : ''}`}/> 
-                              </div>
-                            </Link>   
+                        <div className={`tab ${key === subpage ? 'active' : ''}`} onClick={(e) => { onClick(e) }}>
+                          <div id={key}>{title}</div>
+                          <div className={`${notification ? 'activenotife' : ''}`}/> 
+                        </div>
+                      </Link>   
                     });
                   }  
                 })

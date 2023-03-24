@@ -1,5 +1,5 @@
 const AdminService = require('../services/admin-service');  
-
+// Для работы IO необходимы СТРЕЛОЧНЫЕ функции у класса!!
 module.exports = class AdminController  {
   io; 
 
@@ -8,7 +8,7 @@ module.exports = class AdminController  {
   }
  
    
-  async registration(req,res,next) {
+  registration = async (req,res,next) => {
     try {
       const {
         login, 
@@ -24,17 +24,15 @@ module.exports = class AdminController  {
         number 
       } = req.body 
     
-      const userData = await AdminService.registration(login, password , name, lastname, gender, email, region, city, district, street, number , req.cookies);
-      // res.cookie('refreshToken',userData.refreshToken,{maxAge:30*24*60*60*1000,httpOnly: true})
+      const userData = await AdminService.registration(login, password , name, lastname, gender, email, region, city, district, street, number );
+ 
       return res.json(userData);
     } catch (e) {
       next(e)
     }
   }
-
-
-
-  async listUsers(req,res,next) {
+ 
+  listUsers = async (req,res,next) => {
     try { 
       const user_list = await AdminService.listUsers();
 
@@ -44,7 +42,7 @@ module.exports = class AdminController  {
     }
   }
  
-  async getUser(req,res,next) {
+  getUser = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await AdminService.getById(id); 
@@ -54,7 +52,7 @@ module.exports = class AdminController  {
     }
   }
    
-  async getAuthinfo(req,res,next) {
+  getAuthinfo = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await AdminService.getById(id); 
@@ -64,7 +62,7 @@ module.exports = class AdminController  {
     }
   }
  
-  async getSubscribe(req,res,next) {
+  getSubscribe = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await AdminService.getById(id); 
@@ -74,7 +72,7 @@ module.exports = class AdminController  {
     }
   }
  
-  async getWallet(req,res,next) {
+  getWallet = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_id = await AdminService.getById(id); 
@@ -84,7 +82,7 @@ module.exports = class AdminController  {
     }
   }
 
-  async addUser(req,res,next) {
+  addUser = async (req,res,next) => {
     try {  
       const { 
         login,
@@ -146,7 +144,7 @@ module.exports = class AdminController  {
     }
   }
   
-  async updateUser(req,res,next) {
+  updateUser = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -179,7 +177,7 @@ module.exports = class AdminController  {
     }
   }
   
-  async updateSubscribe(req,res,next) {
+  updateSubscribe = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -212,7 +210,7 @@ module.exports = class AdminController  {
     }
   }
   
-  async updateReferalinfo(req,res,next) {
+  updateReferalinfo = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -245,7 +243,7 @@ module.exports = class AdminController  {
     }
   }
   
-  async updateAuthinfo(req,res,next) {
+  updateAuthinfo = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -278,7 +276,7 @@ module.exports = class AdminController  {
     }
   }
   
-  async updateWallet(req,res,next) {
+  updateWallet = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const {  
@@ -311,7 +309,7 @@ module.exports = class AdminController  {
     }
   }
  
-  async deleteUser(req,res,next) {
+  deleteUser = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const diaolog_delete = await AdminService.delete(id); 

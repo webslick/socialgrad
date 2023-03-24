@@ -11,8 +11,7 @@ const cookieParser = require('cookie-parser');
 
 const SERVER = config.get('Server');
 const PORT = SERVER.port || 4000;
- 
-
+  
 const errorMiddleware = require('./middelwares/error-middleware');
 const updateLastSeen = require('./middelwares/update-lastseen-middleware');
 
@@ -36,6 +35,7 @@ app.use(cors({
   }
 }
 )); 
+
 const io = createSocket(http)
 
 // app.use(checkAuth);

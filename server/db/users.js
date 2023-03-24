@@ -5,8 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
   }, {});
   users.associate = (models) => {
-    users.hasOne(models.userDetails, { foreignKey: 'userId', as: 'userDetails' });
-    users.hasMany(models.posts, { foreignKey: 'userId', as: 'posts' });
+    users.hasOne(models.userDetails, { foreignKey: 'userId', as: 'userDetails' }); 
     users.belongsToMany(models.groups, { foreignKey: 'userId', through: 'users_groups', as: 'groups' });
   };
   return users;

@@ -4,13 +4,13 @@ module.exports = {
     await queryInterface.createTable('RoomTypes', { 
       id: {
         allowNull: false,
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING(50)
       },  
       typeId: {
         type: Sequelize.INTEGER,  
-      },  
+      },   
       typeName: {
         type: Sequelize.STRING(50), 
       }, 

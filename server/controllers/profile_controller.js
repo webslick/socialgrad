@@ -1,5 +1,5 @@
 const profileService = require('../services/profile-service');  
-
+// Для работы IO необходимы СТРЕЛОЧНЫЕ функции у класса!!
 module.exports = class ProfileController  {
   io; 
 
@@ -7,7 +7,7 @@ module.exports = class ProfileController  {
     this.io = io; 
   }
  
-  async listRoles(req,res,next) {
+  listRoles = async (req,res,next) => {
     
     try { 
       const profiles = await profileService.list(); 
@@ -17,7 +17,7 @@ module.exports = class ProfileController  {
     }
   }
  
-  async getProfile(req,res,next) {
+  getProfile = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const users = await profileService.getById(id); 
@@ -27,7 +27,7 @@ module.exports = class ProfileController  {
     }
   }
  
-  async getRole(req,res,next) {
+  getRole = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const users = await profileService.getById(id); 
@@ -37,7 +37,7 @@ module.exports = class ProfileController  {
     }
   }
 
-  async addRole(req,res,next) {
+  addRole = async (req,res,next) => {
     try { 
       const { 
         role_name
@@ -51,7 +51,7 @@ module.exports = class ProfileController  {
     }
   }
 
-  async addUsersRole(req,res,next) {
+  addUsersRole = async (req,res,next) => {
     try { 
       const { 
         user_id,
@@ -81,7 +81,7 @@ module.exports = class ProfileController  {
     }
   }
   
-  async updateProfile(req,res,next) {
+  updateProfile = async (req,res,next) => {
     try {  
       const { id } = req.params; 
       const users = await profileService.update(id,req.body); 
@@ -91,7 +91,7 @@ module.exports = class ProfileController  {
     }
   }
   
-  async updateRole(req,res,next) {
+  updateRole = async (req,res,next) => {
     try {  
       const { id } = req.params; 
       const users = await profileService.update(id,req.body); 
@@ -101,7 +101,7 @@ module.exports = class ProfileController  {
     }
   }
  
-  async deleteUsersRole(req,res,next) {
+  deleteUsersRole = async (req,res,next) => {
     try { 
       const users = await profileService.delete(); 
      return res.json(users);
@@ -110,7 +110,7 @@ module.exports = class ProfileController  {
     }
   }
  
-  async deleteRole(req,res,next) {
+  deleteRole = async (req,res,next) => {
     try { 
       const users = await profileService.delete(); 
      return res.json(users);

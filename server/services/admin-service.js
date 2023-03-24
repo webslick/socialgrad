@@ -258,9 +258,9 @@ class AdminService {
           flatsCount: 122 
         });  
  
-        const tokens = this.generateToken({ login: serviceFunction.removeEmpty(serviceFunction.getObjkey(user[0],'AuthInfos',false), 'AuthInfos').login, userId: serviceFunction.removeEmpty(user[0], 'Users').id, role: user[1].role }) 
+        // const tokens = this.generateToken({ login: serviceFunction.removeEmpty(serviceFunction.getObjkey(user[0],'AuthInfos',false), 'AuthInfos').login, userId: serviceFunction.removeEmpty(user[0], 'Users').id, role: user[1].role }) 
      
-        await DB.updateModelTables(serviceFunction.getObjkey(user[0],'AuthInfos',false),{ refreshToken: tokens.refreshToken, accessToken: tokens.accessToken }); 
+        // await DB.updateModelTables(serviceFunction.getObjkey(user[0],'AuthInfos',false),{ refreshToken: tokens.refreshToken, accessToken: tokens.accessToken }); 
    
         return {
           user: { login: serviceFunction.removeEmpty(serviceFunction.getObjkey(user[0],'AuthInfos',false), 'AuthInfos').login },

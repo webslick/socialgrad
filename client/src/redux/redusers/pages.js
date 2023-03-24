@@ -1,7 +1,7 @@
 import ActionTypes from '../constants';
 
 const initialState = {
-  page: 'myhome',
+  page: 'main',
   subpage: 'myhome',
   header_visible: true,
   active: false

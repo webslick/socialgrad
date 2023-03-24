@@ -1,13 +1,12 @@
 const userService = require('../services/users-service');  
-
+// Для работы IO необходимы СТРЕЛОЧНЫЕ функции у класса!!
 module.exports = class UserController  { 
-  io; 
-
+  
   constructor(io) { 
     this.io = io; 
   }
  
-  async listUsers(req,res,next) {   
+  listUsers = async (req,res,next) => {   
     try { 
      const users = await userService.listUsers(); 
     return res.json(users);
@@ -16,7 +15,7 @@ module.exports = class UserController  {
   } 
   }
  
-  async getById(req,res,next) {
+  getById = async (req,res,next) => {
     try { 
       const { id } = req.params; 
       const users = await userService.getById(id); 
@@ -26,7 +25,7 @@ module.exports = class UserController  {
     }
   }
 
-  async add(req,res,next) {
+  add = async (req,res,next) => {
     try { 
       const { 
         user_id, 
@@ -100,7 +99,7 @@ module.exports = class UserController  {
     }
   }
   
-  async update(req,res,next) {
+  update = async (req,res,next) => {
     try {  
       const { id } = req.params;  
       const { 
@@ -151,7 +150,7 @@ module.exports = class UserController  {
     }
   }
  
-  async delete(req,res,next) {
+  delete = async (req,res,next) => {
     try { 
       const { id } = req.params;    
       const users = await userService.delete(id); 
@@ -161,18 +160,18 @@ module.exports = class UserController  {
     }
   }
 
-  async getMe(req,res,next) { 
+  getMe = async (req,res,next) => { 
     try { 
  
-      const { refreshToken } = req.cookies; 
-      const userData = await userService.getMe(refreshToken); 
+      const { refreshToken } = req.cookies;  
+      const userData = await userService.getMe(refreshToken);  
       return res.json(userData);
     } catch (e) {
       next(e);
     }
   }
    
-  async registration(req,res,next) {
+  registration = async (req,res,next) => {
     try {
       const { email ,password } = req.body 
       const userData = await userService.registration(email, password, req.cookies);
@@ -183,29 +182,18 @@ module.exports = class UserController  {
     }
   }
     
-  async login(req,res,next) { 
+  login = async (req,res,next) => { 
     try {
-      const { email ,password } = req.body;
-      const userData = await userService.login(email, password,req.cookies); 
+      const { login ,password } = req.body;
+      const userData = await userService.login(login, password,req.cookies); 
       res.cookie('refreshToken',userData.user.refreshToken,{ maxAge:30*24*60*60*1000, httpOnly: true })
       return res.json(userData);
     } catch (e) {
       next(e);
     }
   } 
-    
-  async getUsersFromHome(req,res,next) { 
-    try {
-      const { city, street, number } = req.body;
-      const userData = await userService.getUsersFromHome(city, street, number,req.cookies);  
-      return res.json(userData);
-    } catch (e) {
-      next(e);
-    }
-  } 
- 
-
-  async refresh(req,res,next) {  
+  
+  refresh = async (req,res,next) => {  
     try {
       const { refreshToken } = req.cookies;  
       const userData = await userService.refresh(refreshToken);  
@@ -216,7 +204,7 @@ module.exports = class UserController  {
     }
   }
 
-  async logout(req,res,next) {  
+  logout = async (req,res,next) => {  
     try {
       const { refreshToken } = req.cookies;  
       const userData = await userService.logout(refreshToken);  

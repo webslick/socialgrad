@@ -1,4 +1,12 @@
 .subTitlePriceContainer {
+  width: 100%;
   font-size: 18px;
-  font-weight: 700; 
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-skeleton-element .ant-skeleton-button { 
+  background: rgb(225 238 255); 
 }

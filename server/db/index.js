@@ -3,7 +3,7 @@ const {
   Citys, 
   Dialogs,
   Districts,
-  Flats, 
+  Messages, 
   Tokens, 
   Homes,
   Profiles, 
@@ -15,13 +15,15 @@ const {
   Subscribes,
   Users, 
   Wallets,
+  UsersRooms,
+  HomesRooms
  } = require('../db/models');
 
+ const { Op } = require("sequelize");
 const db = require('./models/index');
-const { Op } = require("sequelize");
+
 const serviceFunction = require("../service_functions")
-const ApiErr = require('../exeptions/api-error');
-const messages = require('./models/messages');
+const ApiErr = require('../exeptions/api-error'); 
 const RoleDto = require('../dtos/role-dto');
 
 class DB {
@@ -135,80 +137,116 @@ class DB {
           }
   
           result.push(user)
-          result.push(new RoleDto(roles))
-          // result.push(profile)
-          // result.push(home) 
-  
+          result.push(new RoleDto(roles)) 
           return result;   
 
-        // case 'home': 
-        //   const { 
-        //     index,  
-        //     number, 
-        //     floors, 
-        //     entrancesCount,  
-        //     flatsCount,  
-        //     region, 
-        //     city, 
-        //     district,
-        //     street 
-        //   } = obj;  
- 
-
-
-
-
-        //   const home = await Homes.create({ 
-        //     regionId: await serviceFunction.createLocationIfNot(Regions,region),
-        //     cityId: await serviceFunction.createLocationIfNot(Citys,city),
-        //     streetId: await serviceFunction.createLocationIfNot(Districts,district),
-        //     districtId: await serviceFunction.createLocationIfNot(Streets,street),
-        //     index,  
-        //     number, 
-        //     floors, 
-        //     entrancesCount,  
-        //     flatsCount  
-        //   }); 
- 
-        //   if (!home) {
-        //      throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message)
-        //   }
-          
-        //   return home;   
-        case 'room': 
-        const {
-           typeName,
-           roomName,
-           creatorId
-        } = obj; 
-        
-          const room = await Rooms.create({
-            RoomTypes: { 
-              typeName,
-              roomName,
-              creatorId
-            },
-          },{
-            include: [
-              {
-                model: RoomTypes,
-                as: 'RoomTypes', 
-              } 
-            ], 
-          }); 
-
-
+        case 'dialog':   
+          const { 
+            userId, 
+            roomId, 
+            collaborator,  
+            lastMessage, 
+            status  
+          } = obj;   
        
-             
-          if (!room) {  throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message) }
-          // const roomType = await RoomTypes.create({
-          //   typeName,
-          //   roomName,
-          //   creatorId
-          // });  
-          // if (!roomType) {  throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message) } 
+          const dialog = await Dialogs.create({ 
+            userId, 
+            roomId, 
+            collaborator,  
+            lastMessage,
+            status  
+          });  
+        
+          if (!dialog) {
+            throw ApiErr.BadRequest("Не получилось создать диалог") 
+          }
+       
+          const room_add_dialog = await RoomTypes.findOne({ 
+            where: { id: roomId },  
+          })
+ 
+          if (!room_add_dialog) {
+            dialog.destroy({
+              where: dialog.id 
+            });
+            throw ApiErr.BadRequest("Комната не найдена") 
+          }
           
-          return room;   
+          await room_add_dialog.update({ dialogId: roomId }); 
+      
+          return dialog;   
+     
+        case 'messages':   
+
+          const {   
+            dialogId,  
+            text, 
+            type, 
+            filename, 
+            readed  
+          } = obj;   
+  
+          const messages = await Messages.create({ 
+            userId: obj.userId, 
+            dialogId, 
+            roomId: obj.roomId, 
+            text, 
+            type, 
+            filename, 
+            readed   
+          });  
+  
+          if (!messages) {
+            throw ApiErr.BadRequest("Не получилось создать сообщение") 
+          }
+       
+          return messages;   
+    
+        case 'join_room':   
+            const join_room = await UsersRooms.create({ // возвращает модель одну
+              userId: obj.userId, 
+              roomId: obj.roomId // комната для создания
+            }); 
+    
+            if (!join_room) {  throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message) }  
+ 
+            return join_room ;  
+        case 'room': 
+        const {  
+          homeIds,
+          typeName, 
+          roomName,
+          creatorId
+        } = obj;  
+  
+        const room = await Rooms.create({
+          RoomTypes: { 
+            id: obj.id, 
+            typeName,
+            roomName,
+            creatorId,  
+          }, 
+        }, {
+          include: [
+            {
+              model: RoomTypes,
+              as: 'RoomTypes', 
+            }, 
+          ], 
+        }); 
+
+        if (!room) {  throw ApiErr.BadRequest(e.parent ? e.parent.sqlMessage : e.message) }
+ 
+        homeIds.map(async item => {
+          const homesRooms = await HomesRooms.create({ 
+            roomId: obj.id,
+            homeId:item.id  
+          } ); 
+        })
+ 
+        return room
+
+         
         // case 'flat': 
         //   const { 
         //     connected, 
@@ -311,11 +349,13 @@ class DB {
       }) 
  
       return users_home_id;
-      case 'users_home':   
+      case 'users_home': 
+      const { userids, notid } = item  
+    
       const users_home = await Users.findAll({  
         where: {
-          [Op.or]: item,
-          [Op.not]: [{ id: 4 }],
+          [Op.or]: userids,
+          [Op.not]: [{ id: notid }],
         }, 
         attributes: [ "id","createdAt"],
         include: [    
@@ -358,15 +398,20 @@ class DB {
  
       return homes_list;
       case 'rooms_list':  
-      const rooms_list = await Rooms.findAll({  
-        // attributes: [ "index","floors","entrancesCount","flatsCount", "number"],
-        include: [  
-          {
-            model: RoomTypes,
-            as: 'RoomTypes', 
-            // attributes: homelocationAttributes,
-          },   
-        ],
+      const rooms_list = await UsersRooms.findAll({   
+        where: { userId: item },  
+        include: [
+          { 
+            model: Dialogs,
+            as: 'Dialogs', 
+            // include: [
+            //   { 
+            //     model: Messages,
+            //     as: 'Messages', 
+            //   }
+            // ]
+          }
+        ] 
       }) 
  
       return rooms_list;
@@ -402,6 +447,10 @@ class DB {
                 model: Streets,
                 as: 'Streets',  
               },  
+              {
+                model: RoomTypes,
+                as: 'RoomTypes' 
+              }, 
             ],
           },   
           {
@@ -421,16 +470,47 @@ class DB {
              include: [  
               {
                 model: Roles,
-                as: 'Roles', 
-                // attributes: homelocationAttributes
+                as: 'Roles',  
               },  
             ],
-          },  
+          }, 
+          {
+            model: RoomTypes, 
+            as: 'RoomTypes', 
+          } 
         ],
         
       }) 
-      
+ 
       return user_me;
+      case 'roomlive': 
+    
+      const user_room = await UsersRooms.findAll({ 
+        where: { userId: item }, 
+      }) 
+
+      return user_room;
+      case 'join_room': 
+    
+      const join_room = await UsersRooms.findAll({ 
+        where: { userId: item }, 
+      }) 
+
+      return join_room;
+      case 'roomdelete': 
+    
+      const room = await RoomTypes.findOne({ 
+        where: { id: item }, 
+        include: [  
+          {
+            model: Rooms,
+            as: 'Rooms',  
+          },  
+        ],
+      }) 
+ 
+      return room;
+
       case 'user_token':  
       const usertoken = await AuthInfos.findOne({ 
           where: { refreshToken: item },  
@@ -664,12 +744,32 @@ class DB {
         })  
  
         return dialog
+      case 'messages':  
+        const messages = await RoomTypes.findAll({ 
+          where: {
+            id: item.roomId
+          }, 
+           include: [ 
+          {
+            model: Messages,
+            as: 'Messages',  
+          } , 
+        ] 
+        })  
+ 
+        return messages
     } 
   }
   
   async removeInTables(model,userId) {
     const mod = await model.destroy({
-      where: userId 
+      where: userId,
+      include: [
+        {
+          model: 'UsersRooms',
+          as:'UsersRooms'
+        }
+      ]
     });
     return mod;
   }

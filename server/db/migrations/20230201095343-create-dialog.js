@@ -4,39 +4,19 @@ module.exports = {
     await queryInterface.createTable('Dialogs', { 
       id: {
         allowNull: false,
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING(50), 
       },
       userId: {
-        type: Sequelize.INTEGER,
-        // references: { model: 'Profiles', key: 'id' },
-        // onDelete: 'CASCADE',
-      },
-      dialogId: { 
-        type: Sequelize.INTEGER
-      },
+        type: Sequelize.INTEGER, 
+      },  
       collaborator: {
         type: Sequelize.INTEGER
       }, 
       lastMessage: {
         type: Sequelize.INTEGER
-      },
-      senderId: {
-        type: Sequelize.INTEGER
-      },
-      numSender: {
-        type: Sequelize.INTEGER
-      },
-      numRecipient: {
-        type: Sequelize.INTEGER
-      },
-      participantes: {
-        type: Sequelize.STRING
-      },
-      users: {
-        type: Sequelize.STRING
-      },
+      }, 
       status: {
         type: Sequelize.BOOLEAN
       },    

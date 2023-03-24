@@ -6,7 +6,7 @@ import { IUploadFile, IUploadFileDocument } from "../models/UploadFile";
 
 class UserController {
   create = (req: express.Request, res: express.Response): void => {
-    const userId: string = req.user._id;
+    const userId: string = req.user.id;
     const file: any = req.file;
 
     cloudinary.v2.uploader
@@ -56,8 +56,8 @@ class UserController {
   };
 
   delete = (req: express.Request, res: express.Response): void => {
-    const fileId: string = req.user._id;
-    UploadFileModel.deleteOne({ _id: fileId }, function (err: any) {
+    const fileId: string = req.user.id;
+    UploadFileModel.deleteOne({ id: fileId }, function (err: any) {
       if (err) {
         return res.status(500).json({
           status: "error",

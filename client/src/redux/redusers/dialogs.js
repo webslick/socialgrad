@@ -1,15 +1,15 @@
 import ActionTypes from '../constants';
 
 const initialState = {
-  dialogs: [],
+  dialog_active: null,
 };
 
 export default function dialogs(state = initialState, { type, payload }) {
   switch (type) {
-    case ActionTypes.DIALOGS_SET_ITEMS:
+    case ActionTypes.DIALOGS_SET_ACTIVE:
       return {
         ...state,
-        dialogs: payload,
+        dialog_active: payload,
       }; 
     default:
       return state;

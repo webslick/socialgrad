@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { pages, users } from '../../redux/selectors';
@@ -15,6 +15,7 @@ function HeaderMenu(props) {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const app_ref = useRef();   
 
   // useEffect(() => {   
   //   dispatch(change_page(localStorage.getItem('page_pfds')));  
@@ -38,7 +39,7 @@ function HeaderMenu(props) {
       title:"МОЙ ДОМ",
       key:"myhome",
       rout:`/myhome`,
-      notification: true
+      notification: false
     },
     {
       title:"ЖКХ",
@@ -73,11 +74,14 @@ function HeaderMenu(props) {
         <div className="container">
           <div className={`header ${scroll > 100 ? 'top' : ''}`}>
             <div className="topItemsMenu"> 
-              <div className='colrowcontainer'>
-                <Link to="/" className="logoContainer">
+              <div onClick={() => {
+                dispatch(change_page('main')); 
+                navigate('/')
+              }} className='colrowcontainer'>
+                <div className="logoContainer">
                   <img className={`${scroll > 100 ? 'litleImg' : 'logoImg'}`} src={logo} alt="logo" />
                   <span className="logo" >Первая Федеральная Домовая Служба</span>
-                </Link>
+                </div>
                 <span className={`${scroll > 100 ? 'litleSubTextMenu' : 'subTextMenu'}`}>Территория твоего проживания</span>
               </div>
               <div className='colrowcontainer'>

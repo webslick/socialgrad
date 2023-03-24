@@ -27,4 +27,18 @@ export function change_subpage(subpage) {
     payload: subpage
   }
 }
+
+export function setSocket(socket) { 
+  return {
+    type: ActionTypes.APP_SOCKET,
+    payload: socket
+  }
+}
+
+export function setWorkData(work_data) { 
+  return {
+    type: ActionTypes.APP_WORK_DATA,
+    payload: work_data
+  }
+}
   

@@ -1,3 +1,4 @@
+const moment = require('moment'); 
 module.exports = class ProfileDto { 
   role; 
   name;
@@ -24,16 +25,16 @@ module.exports = class ProfileDto {
     this.name = model?.name;  
     this.lastname = model?.lastname;  
     this.gender = model?.gender;  
-    this.birthdate = model?.birthdate;  
+    this.birthdate = moment(model?.birthdate).format("YYYY-MM-DD HH:mm");  
     this.telephone = model?.telephone;  
     this.email = model?.email;  
     this.confirmed = model?.confirmed;  
     this.avatar = model?.avatar;  
     this.confirm_hash = model?.confirm_hash;  
-    this.last_seen = model?.last_seen;  
+    this.last_seen = moment(model?.last_seen).format("YYYY-MM-DD HH:mm");  
     this.position = model?.position;  
-    this.createdAt = model?.createdAt; 
-    this.updatedAt = model?.updatedAt; 
+    this.createdAt = moment(model?.createdAt).format("YYYY-MM-DD HH:mm"); 
+    this.updatedAt = moment(model?.updatedAt).format("YYYY-MM-DD HH:mm"); 
   } 
 }
  
