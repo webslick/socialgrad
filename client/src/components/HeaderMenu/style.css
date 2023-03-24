@@ -177,7 +177,7 @@ a:-webkit-any-link {
 }
 
 .navLink {
-  display: flex;
+  display: flex; 
   align-items: center;
 }
 
